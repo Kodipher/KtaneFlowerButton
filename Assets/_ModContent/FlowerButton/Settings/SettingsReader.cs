@@ -1,6 +1,6 @@
 ﻿
 
-namespace FlowerButtonModule.FlowerButton.Settings {
+namespace FlowerButtonMod.FlowerButton.Settings {
 
 
 	/// <summary>
