@@ -16,10 +16,11 @@ MonoBehaviour:
   author: Kodipher
   description: "[i]\"But have you forgotten someone, my gray-haired friend?\"[/i]\n\nA
     module with a single button. Go ahead. Press it and light up the sky with fireworks!\n\nThe
-    module also comes with its own service to facilitate it's functionality.\n\n\nMusic:
+    mode also comes with a service to achive compatibility with the BombTimerModifier
+    mod.\n\nModule ID: (pending)\n\nManual HTML: (pending)\nManual PDF: (pending)\n\n[hr][/hr]\n\nMusic:
     Monodrama (music box arrangement) by \rR3 Music Box. Original by HOYO-MIX.\nSFX
-    (incl. VO) are from Honkai: Star Rail and are owned by HoYoverse\n\n[hr][/hr]\n\nModule
-    ID: (pending)\n\nManual HTML: (pending)\nManual PDF: (pending)"
+    (incl. VO) and Sparkle sticker sprite are from Honkai: Star Rail and are owned
+    by HoYoverse"
   version: 0.1.0
   outputFolder: build
   previewImage: {fileID: 0}
