@@ -1,0 +1,799 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rephidock.AtomicAnimations.NetFramework35</name>
+    </assembly>
+    <members>
+        <member name="T:Rephidock.AtomicAnimations.AnimationQueue">
+            <summary>
+            <para>
+            A class that automatically plays given animations.
+            In contrast to <see cref="T:Rephidock.AtomicAnimations.AnimationRunner"/>, only runs
+            one animation at a time, keeping other in a queue.
+            </para>
+            <para>
+            Accounts for excess time but only for already enqueued animations.
+            </para>
+            <para>
+            See also: <see cref="T:Rephidock.AtomicAnimations.AnimationRunner"/>, <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation"/>.
+            </para>
+            <para>
+            <see cref="T:System.IDisposable"/> animations are supported and
+            are disposed of when they are finished or when the queue is cleared.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Enqueue(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation})">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationQueue.Enqueue(Rephidock.AtomicAnimations.Base.Animation)"/>
+            <remarks>
+            <para>
+            A <see langword="null"/> lazily initialized value
+            will cause a <see cref="T:System.NullReferenceException"/>
+            when that animation is staged.
+            </para>
+            <para>
+            Any exception thrown when the lazy value is initialized
+            will cause <see cref="M:Rephidock.AtomicAnimations.AnimationQueue.Clear"/> to be called.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Enqueue(Rephidock.AtomicAnimations.Base.Animation)">
+            <summary>
+            <para>
+            Adds an animation to play.
+            Takes ownership of the animation.
+            </para>
+            <para>
+            The animation is played immediately if the queue
+            has no animation currently playing.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.StageNextAnimation(System.TimeSpan)">
+            <summary>
+            Disposes of the current animation and sets the
+            next animation to be the current.
+            </summary>
+            <param name="prevAnimExcessTime">
+            The excess time of the previous animation
+            to serve as start time for the next animation.
+            </param>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Update(System.TimeSpan)">
+            <summary>
+            Updates the currently playing animation and
+            stages the next one if it finishes.
+            </summary>
+            <remarks>
+            Negative <paramref name="deltaTime"/> has undefined behavior.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Clear">
+            <summary>
+            Clears (forgets) all animations, including the one currently playing.
+            <see cref="T:System.IDisposable"/> animations are disposed of.
+            </summary>
+            <remarks>
+            Lazily initialized animations are initialized and then
+            disposed of if necessary.
+            </remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.AnimationQueue.HasAnimations">
+            <summary>True if this queue has animations playing.</summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.AnimationQueue.EnqueuedCount">
+            <summary>
+            The number of animations enqueued to play.
+            The currently playing animation is not counted.
+            </summary>
+        </member>
+        <member name="E:Rephidock.AtomicAnimations.AnimationQueue.OnAnimationEnd">
+            <summary>
+            Event that is invoked when any given animation completes.
+            Called right before the animation is disposed of and
+            the next one in the queue is staged.
+            Called before <see cref="P:Rephidock.AtomicAnimations.AnimationQueue.HasAnimations"/> is updated.
+            </summary>
+            <remarks>
+            Does not get invoked when <see cref="M:Rephidock.AtomicAnimations.AnimationQueue.Clear"/> is called.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationQueue.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.AnimationRunner">
+            <summary>
+            <para>
+            A class that automatically plays given animations.
+            Animations are started the moment they are added
+            and forgotten the moment they are finished.
+            Plays given animations in parallel.
+            </para>
+            <para>
+            See also: <see cref="T:Rephidock.AtomicAnimations.AnimationQueue"/>
+            </para>
+            <para>
+            <see cref="T:System.IDisposable"/> animations are supported and
+            are disposed of when they are finished or when the runner is cleared.
+            </para>
+            </summary>
+            <remarks>
+            Animations are updated in the order of addition.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.AtomicAnimations.Base.Animation,System.TimeSpan)">
+            <summary>
+            Adds an animation to play.
+            The animation is played immediately.
+            Takes ownership of the animation.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.AtomicAnimations.Base.Animation)">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.AtomicAnimations.Base.Animation,System.TimeSpan)"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation},System.TimeSpan)">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.AtomicAnimations.Base.Animation,System.TimeSpan)"/>
+            <remarks>Initializes the lazy value instantly.</remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation})">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation},System.TimeSpan)"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Update(System.TimeSpan)">
+            <summary>
+            Updates all currently playing animations with time since last update.
+            </summary>
+            <remarks>
+            Negative <paramref name="deltaTime"/> has undefined behavior.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Clear">
+            <summary>
+            Clears (forgets) all animations.
+            <see cref="T:System.IDisposable"/> animations are disposed of.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.AnimationRunner.HasAnimations">
+            <summary>True if this runner has animations playing</summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.AnimationRunner.PlayingCount">
+            <summary>The number of animations playing</summary>
+        </member>
+        <member name="E:Rephidock.AtomicAnimations.AnimationRunner.OnAnimationEnd">
+            <summary>
+            Event that is invoked when any given animation completes.
+            Called after the runner forgets about the animation
+            but right before it is disposed of.
+            </summary>
+            <remarks>
+            Does not get invoked when <see cref="M:Rephidock.AtomicAnimations.AnimationRunner.Clear"/> is called.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Base.Animation">
+            <summary>
+            Base interface for all animations.
+            Has no set duration.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime">
+            <summary>
+            The elapsed time for this animation,
+            starting at <see cref="F:System.TimeSpan.Zero"/>.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Base.Animation.ExcessTime">
+            <summary>
+            Time that is considered excess after animation has ended.
+            Set after animation ends. Is <see cref="F:System.TimeSpan.Zero"/> otherwise.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Base.Animation.HasStarted">
+            <summary>
+            Is <see langword="true"/> if <see cref="M:Rephidock.AtomicAnimations.Base.Animation.StartAndUpdate(System.TimeSpan)"/>.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Base.Animation.HasEnded">
+            <summary>
+            Is <see langword="true"/> if the animation finished execution.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.StartAndUpdate(System.TimeSpan)">
+            <summary>
+            <para>
+            Starts animation and performs initial update.
+            The time of the first update may be set to non-zero.
+            </para>
+            <para>
+            Animations are assumed to be resettable unless documented otherwise.
+            Calling this method again should perform the animation again,
+            without undoing the result of the previous animation, partial or not.
+            </para>
+            </summary>
+            <param name="initialTime">The time of the initial update.</param>
+            <remarks>
+            Negative <paramref name="initialTime"/> has undefined behavior.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.StartAndUpdate">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.Base.Animation.StartAndUpdate(System.TimeSpan)"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.Update(System.TimeSpan)">
+            <summary>
+            Updates the animation with time since last update.
+            </summary>
+            <remarks>
+            Negative <paramref name="deltaTime"/> has undefined behavior.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.End(System.TimeSpan)">
+            <summary>Successfully ends the animation.</summary>
+            <remarks>
+            Updates <see cref="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime"/> to be the resulting duration.
+            (Makes <see cref="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime"/> account for <paramref name="excessTime"/>).
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.End">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.Base.Animation.End(System.TimeSpan)"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.StartImpl">
+            <summary>
+            <para>Implementation that is called before the first update.</para>
+            <para>Called after flags are set.</para>
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Animation.UpdateImpl(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para>Implementation that is called every update.</para>
+            <para>Called after <see cref="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime"/> is set.</para>
+            </summary>
+            <param name="deltaTime">Time since last update.</param>
+            <param name="elapsedTimePrevious"><see cref="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime"/> before current update.</param>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Base.Ease">
+            <summary>
+            Base animation for easing a value,
+            additive or exclusive.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Ease.#ctor(System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve)">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Base.Ease"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Ease.EaseUpdateImpl(System.Single)">
+            <summary>
+            Implimentation of the ease.
+            </summary>
+            <param name="valueProgressNew">Next normalized value to ease to in this update</param>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Ease.UpdateTimeSpannedImpl(System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.Ease.UpdateLastTimeSpannedImpl(System.TimeSpan,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Base.TimedAnimation">
+            <summary>
+            Base interface for all animations
+            that have a set duration.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.TimedAnimation.#ctor(System.TimeSpan)">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Base.TimedAnimation"/>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Base.TimedAnimation.Duration">
+            <summary>The duration of the animation.</summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.TimedAnimation.UpdateImpl(System.TimeSpan,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.TimedAnimation.UpdateTimeSpannedImpl(System.TimeSpan)">
+            <summary>
+            <para>Implementation that is called every update.</para>
+            <para>Called after <see cref="P:Rephidock.AtomicAnimations.Base.Animation.ElapsedTime"/> is set.</para>
+            </summary>
+            <param name="deltaTime">Time since last update.</param>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Base.TimedAnimation.UpdateLastTimeSpannedImpl(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para>
+            Implementation that is called as the last update.
+            Variation of <see cref="M:Rephidock.AtomicAnimations.Base.TimedAnimation.UpdateTimeSpannedImpl(System.TimeSpan)"/>.
+            </para>
+            </summary>
+            <param name="deltaTimeNoExcess">Time since last update clamped to go to duration.</param>
+            <param name="exessTime">Excess time of the update that would go over duration.</param>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation">
+            <summary>
+            <para>
+            A wrapper that animates a coroutine
+            (<see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineYield"/>).
+            </para>
+            <para>
+            Note that a coroutine by itself is not an animation.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation.#ctor(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield})">
+            <summary>
+            Creates a playable animation based on given coroutine.
+            (A runnable wrapped for a coroutine).
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation.StartImpl">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation.UpdateImpl(System.TimeSpan,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation.Dispose(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq">
+            <summary>
+            Proives methods to work on coroutines.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.ToCoroutine(Rephidock.AtomicAnimations.Base.Animation)">
+            <summary>
+            Creates a coroutine that is just a given animation.
+            (Yields animation to be a coroutine).
+            Also adds a wait for the animation to be finished.
+            </summary>
+            <remarks>
+            If waiting is not desired, use a cast coverision instead.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.ToAnimation(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield})">
+            <summary>Wraps a coroutine in an animation so it is playable.</summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.AppendCall(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield},System.Action)">
+            <summary>
+            Creates a coroutine based on a given coroutine
+            with a delegate call added at the end.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.PrependCall(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield},System.Action)">
+            <summary>
+            Creates a coroutine based on a given coroutine
+            with a delegate call added and the start.
+            </summary>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Coroutines.CoroutineYield">
+            <summary>
+            <para>
+            An element and basis of a coroutine.
+            Coroutines are <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineYield"/>.
+            May hold an animation or a wait instruction.
+            </para>
+            <para>
+            Supposed to be immutable but old langauge features do not enforce this.
+            Assume all properties are <c>{ get; init; }</c>.
+            </para>
+            <para>
+            See also: <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation"/>.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Animation">
+            <summary>
+            The animation to start. Does not imply any delays.
+            Must be set to <see langword="null"/> for waiting to apply.
+            (is a discriminated union with delays)
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.op_Implicit(Rephidock.AtomicAnimations.Base.Animation)~Rephidock.AtomicAnimations.Coroutines.CoroutineYield">
+            <summary>
+            Wraps a given animation in a <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineYield"/>.
+            Does not imply any delay.
+            </summary>
+            <param name="animation"></param>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitLastYieldedAnimation">
+            <summary>
+            If <see langword="true"/>, causes the routine to wait for the single
+            previously yielded animations to finish.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitAllYieldedAnimations">
+            <summary>
+            If <see langword="true"/>, causes the routine to wait for all
+            previously yielded animations to finish.
+            Overrules <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitLastYieldedAnimation"/>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitFor">
+            <summary>
+            The delay to wait.
+            If <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitUntil"/> is set the target time is the maximum
+            of what either delays achieve.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitUntil">
+            <summary>Elapsed time to wait until.</summary>
+            <remarks>The next animation is started from this timespan.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitUntilPredicate">
+            <summary>
+            <para>
+            If given, the delegate will deny continuing
+            until <see langword="true"/> is returned.
+            Is called every update until satisfied.
+            </para>
+            <para>
+            <see langword="null"/> if not provided.
+            </para>
+            </summary>
+            <remarks>
+            The only waiting option that affects start times of animations
+            without relating to <see cref="T:System.TimeSpan"/>.
+            The following animation is launched on the same update
+            the predicate returns <see langword="true"/>.
+            </remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SuspendForAnUpdate">
+            <summary>
+            If <see langword="true"/>, suspends execution until the next update call
+            <u>without</u> influencing the start times of the following animations.
+            </summary>
+            <remarks>
+            Is the only waiting option that does not affect start times of animations.
+            </remarks>
+        </member>
+        <member name="F:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Join">
+            <summary>
+            A yield that waits for all previously
+            yielded animations in the coroutine to finish.
+            </summary>
+            <remarks>
+            Is a static instance with just
+            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitAllYieldedAnimations"/> being enabled.
+            </remarks>
+        </member>
+        <member name="F:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitPrevious">
+            <summary>
+            A yield that waits for a single previous
+            yielded animation in the coroutine to finish.
+            </summary>
+            <remarks>
+            Is a static instance with just
+            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitLastYieldedAnimation"/> being enabled.
+            </remarks>
+        </member>
+        <member name="F:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Suspend">
+            <summary>
+            A yield that suspends execution until the next update call
+            <u>without</u> influencing the start times of the following animations.
+            </summary>
+            <remarks>
+            Is a static instance with just
+            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SuspendForAnUpdate"/> being enabled.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Sleep(System.TimeSpan)">
+            <summary>
+            A yield that suspends execution for given amount of time.
+            </summary>
+            <remarks>
+            Creates an instance with just 
+            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitFor"/> being set.
+            </remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.EasingCurve">
+            <summary>
+            <para>A delegate that represents an easing function curve.</para>
+            <para>Parameter: normalized time -a.k.a.- time progress (0..1) -a.k.a.- t</para>
+            <para>Returns: normalized value -a.k.a.- value progress (0..1)</para>
+            </summary>
+            <param name="progress">normalized time -a.k.a.- time progress (0..1) -a.k.a.- t</param>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Easing">
+            <summary>
+            A class that provides easing/tweening math
+            in a form of easing curves.
+            See also: <see cref="T:Rephidock.AtomicAnimations.EasingCurve"/>.
+            </summary>
+            <remarks>
+            Derived from <see href="https://gist.github.com/Kryzarel/bba64622057f21a1d6d44879f9cd7bd4"/>
+            </remarks>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Move1D">
+            <summary>
+            Moves 1 value over time.
+            An excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move1D.#ctor(System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Move1D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move1D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Move2D">
+            <summary>
+            Moves 2 values over time.
+            An excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move2D.#ctor(System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Move2D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move2D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Move3D">
+            <summary>
+            Moves 3 values over time.
+            An excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move3D.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Move3D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move3D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Move4D">
+            <summary>
+            Moves 4 values over time.
+            An excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move4D.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Move4D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Move4D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Shift1D">
+            <summary>
+            Shifts 1 value over time.
+            Is not an excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift1D.#ctor(System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Shift1D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift1D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Shift2D">
+            <summary>
+            Shifts 2 values over time.
+            Is not an excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift2D.#ctor(System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Shift2D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift2D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Shift3D">
+            <summary>
+            Shifts 3 values over time.
+            Is not an excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift3D.#ctor(System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Shift3D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift3D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Shift4D">
+            <summary>
+            Shifts 4 values over time.
+            Is not an excusilve ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift4D.#ctor(System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single,System.Single})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Shift4D"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Shift4D.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Waves.ShiftedWave">
+            <summary>
+            A <see cref="T:Rephidock.AtomicAnimations.Waves.Wave"/> that is horizontally shifted.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.ShiftedWave.Wave">
+            <summary>The wave that is to be moved.</summary>
+            <remarks>Required. Init only.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.ShiftedWave.Offset">
+            <summary>
+            The horizontal offset of the wave.
+            Higher values mean furhter to the right.
+            </summary>
+            <remarks>Init only.</remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.ShiftedWave.GetValueAt(System.Single)">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.Waves.Wave.GetValueAt(System.Single)"/>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Waves.Wave">
+            <summary>
+            <para>
+            Represents multiple <see cref="T:Rephidock.AtomicAnimations.EasingCurve"/>s connected together.
+            Each curve's time contributes to wave's width.
+            Each curve can also be scaled.
+            </para>
+            <para>
+            Unlike an <see cref="T:Rephidock.AtomicAnimations.EasingCurve"/>, a <see cref="T:Rephidock.AtomicAnimations.Waves.Wave"/> has
+            an arbitrary width, starting and endling values.
+            </para>
+            <para>
+            Immutable.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.Curves">
+            <summary>
+            <para>
+            The individual curves, contributing to the wave, in normalized form.
+            </para>
+            <para>
+            Not empty.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.CurveDestinations">
+            <summary>
+            <para>
+            The values at which each curve in <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.Curves"/> ends
+            and the next one begins.
+            </para>
+            <para>
+            Has the same length as <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.Curves"/>.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.CurveHorizontalEnds">
+            <summary>
+            <para>
+            The "times" at which each curve in <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.Curves"/> ends
+            and the next one begins.
+            Is also the accumulative width of the wave up to and
+            including a curve.
+            </para>
+            <para>
+            Has the same length as <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.Curves"/>.
+            Values are always acceding or equal to the previous value.
+            </para>
+            <para>
+            If two or more ends are equal it is a vertical gap. 
+            The value at the gap is the end value of the last segement contributing to the gap.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.StartValue">
+            <summary>
+            The value of the wave at x position <c>0</c>.
+            Also the value the first curve starts at.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.Width">
+            <summary>The total width of the curve.</summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.Wave.EndValue">
+            <summary>The value the wave ends at.</summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.Wave.GetValueAt(System.Single)">
+            <summary>
+            <para>
+            Returns the wave's value at a give "time" (<paramref name="horizontalPosition"/>).
+            </para>
+            <para>
+            Out of bounds "time" is a valid input and will return
+            <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.StartValue"/> or <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.EndValue"/>,
+            depending on the bound breeched.
+            </para>
+            </summary>
+            <remarks>
+            Technically can be used as an <see cref="T:Rephidock.AtomicAnimations.EasingCurve"/>,
+            provided StartValue is <c>0</c>, EndValue is <c>1</c> and Width is <c>1</c>.
+            </remarks>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Waves.WaveBuilder">
+            <summary>
+            A class that allows to create a <see cref="T:Rephidock.AtomicAnimations.Waves.Wave"/>
+            by appending segments.
+            </summary>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.StartValue">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.StartValue"/>
+            <remarks><c>0</c> by default.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.Curves">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.Curves"/>
+            <remarks>The given list changes as more curves are added.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.CurveDestinations">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.CurveDestinations"/>
+            <remarks>The given list changes as more curves are added.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.CurveHorizontalEnds">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.CurveHorizontalEnds"/>
+            <remarks>The given list changes as more curves are added.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.Width">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.Width"/>
+            <remarks>The given value changes as more curves are added.</remarks>
+        </member>
+        <member name="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.EndValue">
+            <inheritdoc cref="P:Rephidock.AtomicAnimations.Waves.Wave.EndValue"/>
+            <remarks>The given value changes as more curves are added.</remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.SetStartValue(System.Single)">
+            <summary>Fluently sets <see cref="P:Rephidock.AtomicAnimations.Waves.WaveBuilder.StartValue"/></summary>
+            <returns>this</returns>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.Add(Rephidock.AtomicAnimations.EasingCurve,System.Single,System.Single)">
+            <summary>Fluently adds a single segment to the curve.</summary>
+            <returns>this</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="width"/> is negative.</exception>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.AddGap(System.Single)">
+            <summary>Fluently adds a vertical gap.</summary>
+            <returns>this</returns>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.To(System.Single)">
+            <summary>Changes the destination of the most recently added gap or segment.</summary>
+            <returns>this</returns>
+            <exception cref="T:System.InvalidOperationException">No curve segments where added.</exception>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.Over(System.Single)">
+            <summary>Changes the width of the most recently added segment.</summary>
+            <returns>this</returns>
+            <exception cref="T:System.InvalidOperationException">No curve segments where added.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="width"/> is negative.</exception>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.NormalizeWidth">
+            <summary>
+            Changes the horizontal ends of the curves such that
+            the total width of the wave is <c>1</c>.
+            </summary>
+            <returns>this</returns>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveBuilder.ToWave">
+            <summary>
+            Creates a new <see cref="T:Rephidock.AtomicAnimations.Waves.Wave"/>.
+            </summary>
+            <exception cref="T:System.ArgumentException">No segments have been added.</exception>
+        </member>
+        <member name="T:Rephidock.AtomicAnimations.Waves.WaveEase">
+            <summary>
+            Shifts a <see cref="T:Rephidock.AtomicAnimations.Waves.Wave"/> horizontally over time.
+            Is an exclusive ease.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveEase.#ctor(Rephidock.AtomicAnimations.Waves.Wave,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{Rephidock.AtomicAnimations.Waves.ShiftedWave})">
+            <inheritdoc cref="T:Rephidock.AtomicAnimations.Waves.WaveEase"/>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveEase.CreateRunthrough(Rephidock.AtomicAnimations.Waves.Wave,System.Single,System.Boolean,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{Rephidock.AtomicAnimations.Waves.ShiftedWave})">
+            <summary>
+            Creates a <see cref="T:Rephidock.AtomicAnimations.Waves.WaveEase"/> that shifts the <paramref name="wave"/>
+            from behind an abitrary span of width <paramref name="spanWidth"/>, starting at
+            horizontal position 0, to right beyond it,
+            as if the wave runs through said abitrary span.
+            </summary>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.WaveEase.EaseUpdateImpl(System.Single)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
