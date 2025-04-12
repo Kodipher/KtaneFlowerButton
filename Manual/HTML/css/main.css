@@ -120,8 +120,11 @@ body {
 
 @media screen and (min-width: 900px) {
     body {
-        background: url('../img/web-background.jpg');
+        background: #E1D1BA url('../img/web-background.jpg');
         background-attachment: fixed;
+    }
+    body.dark {
+        background: #353C46 url('../img/web-background-dark.jpg');
     }
 }
 
@@ -199,8 +202,19 @@ td, th {
     overflow: hidden;
 }
 
-.no-border, .no-border tr, .no-border tr th, .no-border tr td {
+.dark .no-border, .no-border, .no-border tr, .no-border tr th, .no-border tr td {
     border: none;
+}
+
+table.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p.centered,
+h5.centered, h4.centered, h3.centered, h2.centered, h1.centered,
+tr.centered {
+    text-align: center;
 }
 
 .centered-img {
@@ -214,6 +228,7 @@ td, th {
     float: right;
     margin-left: .5em;
     margin-bottom: .5em;
+    background-color: #FFF;
 }
 
 [dir='rtl'] .diagram {
@@ -252,6 +267,15 @@ td, th {
         background-size: 100%;
         width: 8.5in; /* = 8.5in at 12pt (1em) */
         min-height: 11in; /* = 11in at 12pt (1em) */
+    }
+    .dark .page {
+        background-color: #232323;
+    }
+    .developer-mode .page {
+        background-color: #f66;
+    }
+    .dark.developer-mode .page {
+        background-color: #700;
     }
 }
 
@@ -299,6 +323,43 @@ td, th {
 
 .page-bg-07 {
     background-image: url("../img/page-bg-noise-07.png");
+}
+
+.dark .page-bg-01 {
+    background-image: url("../img/page-bg-noise-01-dark.png");
+}
+
+.dark .page-bg-02 {
+    background-image: url("../img/page-bg-noise-02-dark.png");
+}
+
+.dark .page-bg-03 {
+    background-image: url("../img/page-bg-noise-03-dark.png");
+}
+
+.dark .page-bg-04 {
+    background-image: url("../img/page-bg-noise-04-dark.png");
+}
+
+.dark .page-bg-05 {
+    background-image: url("../img/page-bg-noise-05-dark.png");
+}
+
+.dark .page-bg-06 {
+    background-image: url("../img/page-bg-noise-06-dark.png");
+}
+
+.dark .page-bg-07 {
+    background-image: url("../img/page-bg-noise-07-dark.png");
+}
+
+.dark {
+    color: #ddd;
+    background-color: #222;
+}
+
+.dark table, .dark th, .dark td {
+    border-color: #ddd;
 }
 
 .page-content {
@@ -403,91 +464,18 @@ td, th {
         text-decoration: none;
     }
 
-.bomb-diagram {
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-}
-
-.bomb-diagram-front {
-    width: 18.0020625em; /* Hardcoding for IE */
-}
-
-.bomb-diagram-side {
-    width: 5.3895625em; /* Hardcoding for IE */
-}
-
-.diagram-label {
-}
-
-.bomb-diagram img {
-    height: 11.7em; /* just barely gives enough room for all the other text */
-    vertical-align: middle;
-    padding: .5em 1em;
-}
-
-.bomb-diagram table, .bomb-diagram tr, .bomb-diagram td {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-.bomb-diagram table {
-    margin: 0 auto;
-}
-
-.timer-diagram {
-    text-align: center;
-    display: block;
-    float: right;
-    width: 5em;
-    padding: 0;
-    margin: 0 0 2em 2em;
-}
-
-[dir='rtl'] .timer-diagram {
-    float: left;
-}
-
-.timer-diagram img {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.section-title .page-content {
-    text-align: center;
-}
-
-.section-title .vertical-spacer {
-    height: 20.5em;
-}
-
-.music-image {
-    height: 45em;
-}
-
-.music-table td, .music-table th {
-    padding: 0;
-}
-
-.password-table {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.repeaters-table {
+.dark .repeaters-table, .repeaters-table {
     width: 98%;
     border: none;
     margin-left: auto;
     margin-right: auto;
 }
 
-.repeaters-spacer {
+.dark .repeaters-spacer, .repeaters-spacer {
     border: none;
 }
 
-.whos-on-first-step1-table, .whos-on-first-step1-table td {
+.dark .whos-on-first-step1-table, .whos-on-first-step1-table, .whos-on-first-step1-table td {
     margin-left: auto;
     margin-right: auto;
     border: none;
@@ -499,15 +487,23 @@ td, th {
         padding: 0.45em 0.45em .7em .7em;
     }
 
-        .whos-on-first-step1-table th table, .whos-on-first-step1-table td table {
+        .whos-on-first-step1-table :is(th,td) table {
             width: 95%;
             margin-left: auto;
             margin-right: auto;
+        }
+        .dark .whos-on-first-step1-table :is(th,td) table td img,
+        .dark .whos-on-first-step1-table :is(th,td) table.eye-table td.button {
+            filter: invert(90%);
         }
 
 .whos-on-first-look-at-display {
     background-color: black;
     color: white;
+}
+.dark .whos-on-first-look-at-display {
+    background-color: #BBB;
+    color: #000;
 }
 
 .whos-on-first-step1-table td table td {
@@ -518,6 +514,7 @@ td, th {
     text-align: center;
     border: 1px solid black;
 }
+.dark .whos-on-first-step1-table td table :is(td, th) { border-color: #DDD; }
 
 .whos-on-first-step1-table td table th {
     font-size: 1em;
@@ -564,14 +561,12 @@ td, th {
     border-style: none;
 }
 
-.keypad-symbol-image {
-    height: 1.9em;
+.dark .keypad-table-spacer, .dark .keypad-table {
+    border-style: none;
 }
 
-.maze {
-    width: 11em;
-    height: 11em;
-    margin: .1em;
+.keypad-symbol-image {
+    height: 1.9em;
 }
 
 #morseCodeChart {
@@ -592,128 +587,49 @@ td, th {
 .morse-code table th {
     font-size: 1.2em;
     font-weight: bold;
-    width: 5em;
+    width: 5.5em;
 }
 
 .morse-code table td {
     text-align: center;
 }
 
-.venn-wires table th {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.venn-wires table td {
-    text-align: center;
-}
-
-#venndiagram {
-    display: block;
-    width: 70%;
-    position: relative;
-    top: -2em;
-    margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-#vennlegend {
-    width: 20em;
+.morse-signal-table {
     float: left;
-    position: relative;
-    top: -0.7em;
+    margin-right: 1em;
+    height: 32em;
+    width: 24.8270625em;
+    border: 1px solid #021a40;
+    background-color: #ffffff;
 }
 
-[dir='rtl'] #vennlegend {
-    float: right;
-}
-
-#venntable {
-    border-width: 0.2em;
-    position: relative;
-    top: -0.7em;
-}
-
-    #venntable td {
-        font-size: 0.75em;
-    }
-
-.venn-wires .appendix-reference {
-    margin-top: 0;
-    position: relative;
-}
-
-.appendix-ports table {
-    margin-top: 1em;
-}
-
-.appendix-ports img {
-    height: 5em;
-}
-
-.appendix-ports table td {
-    text-align: center;
-}
-
-.appendix-ports table th {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.needy-knob table {
-    margin-left: 1.3em;
-    margin-right: 1.3em;
-}
-
-    .needy-knob table td, .needy-knob table th {
-        width: 1.5em;
-        text-align: center;
-    }
-
-.needy-diagram-label {
-    text-align: left;
-}
-
-[dir='rtl'] .needy-diagram-label {
-    text-align: right;
-}
-
-.wire-sequence table {
-    display: inline-table;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    width: 15.1em;
-    font-size: 0.9em;
-}
-
-.wire-sequence td, .wire-sequence th {
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-}
-
-.wire-sequence table .header {
+.dark .morse-signal-table {
     background-color: #222;
-    color: #FFF;
 }
 
-.wire-sequence .blue-table {
-    /* Because it's the middle table... */
-    margin-left: .3em;
-    margin-right: .3em;
+.morse-signal-table td, .morse-signal-table th {
+    border: none;
 }
 
-.wire-sequence .second-col {
-    width: 5em;
+.morse-interpret th, .morse-interpret td {
+    padding: 0.4em 0.3em;
+}
+
+.morse-interpret p {
+    margin: 0 1em;
+    font-size: 0.8em;
+}
+
+#morseSignalImg {
+    width: 100%;
 }
 
 .memory-rules p {
     margin-top: .3em;
-    font-size: 0.95em; /* TODO: Remove this, it's a quick hack to get printing looking nicer with our placeholder graphic design. */
+    font-size: 0.95em;
 }
 
-.flavour-text {
+.flavour-text, .comment {
     font-style: italic;
     font-size: 75%;
     margin-top: .5em;
@@ -852,21 +768,17 @@ td, th {
 
 @media print {
     /* Removed all this stuff because we'll be aiming to make everything deliberate for print */
-    * {
+    /* * { */
         /*background: transparent !important;
         color: #000 !important;*/ /* Black prints faster: h5bp.com/s */
         /*box-shadow: none !important;
         text-shadow: none !important;*/
-    }
+    /* } */
 
     a,
     a:visited {
         text-decoration: underline;
     }
-
-        a[href]:after {
-            content: " (" attr(href) ")";
-        }
 
     abbr[title]:after {
         content: " (" attr(title) ")";
@@ -897,10 +809,6 @@ td, th {
         page-break-inside: avoid;
     }
 
-    img {
-        max-width: 100% !important;
-    }
-
     @page {
         margin: 0;
     }
@@ -926,6 +834,10 @@ td, th {
     padding: .3em .7em;
 }
 
+.dark .page-header-section-title.ruleseed-seeded {
+    color: #f44;
+
+}
 .ruleseed-header {
     display: none;
 }
@@ -974,6 +886,10 @@ td, th {
     padding: 10px 15px 15px 20px;
 }
 
+    .dark #optionsMenu {
+        background: #212121;
+    }
+
     #optionsMenu.open {
         transform: none;
     }
@@ -994,5 +910,119 @@ td, th {
 @media screen and (max-width: 900px), print {
     #pageTypeOption {
         display: none;
+    }
+}
+
+.dark a {
+    color: #F44121;
+}
+
+.dark ::selection {
+    background: #2E58CC;
+    color: white;
+}
+
+.dark .invertible {
+    filter: contrast(75%) invert(100%);
+}
+
+/* Hidden table cells */
+.dark .borderless, .borderless {
+    border: none;
+}
+.dark td.corner, .dark th.corner, td.corner, th.corner {
+    border: none;
+}
+.dark td.empty, .dark th.empty, td.empty, th.empty {
+    border: none;
+}
+
+.developer-mode-warning {
+    color: #f88;
+    background-color: #600;
+}
+.dark .developer-mode-warning {
+    color: #400;
+    background-color: #f66;
+}
+div.developer-mode-warning {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    transition: 0.2s;
+}
+div.developer-mode-warning:hover {
+    background-color: #0000;
+    color: #0000;
+    user-select: none;
+}
+div.developer-mode-warning p {
+    font-weight: bold;
+    margin-top: 0.2em;
+    margin-bottom: 0.4em;
+}
+
+p.caption, caption {
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* stacks up in the center with no spacing by default */
+.hstack {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.vstack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* elements stack up on the left (top for a vstack) */
+.hstack.left, .vstack.top { justify-content: start; }
+/* stack up on the right (or bottom for a vstack) */
+.hstack.right, .vstack.bottom { justify-content: end; }
+/* fill available space by putting space between elements */
+:is(.hstack, .vstack).full { justify-content: space-between; }
+/* fill available space by putting space between elements and around them */
+:is(.hstack, .vstack).even { justify-content: space-evenly; }
+/* elements can wrap if space is too small */
+:is(.hstack, .vstack).wrap { flex-wrap: wrap; }
+/* align the centers of each element in the stack */
+:is(.hstack, .vstack).alignc { align-items: center; }
+/* align the top edges of each element (or left edges for a vstack) */
+.hstack.top, .vstack.left { align-items: flex-start; }
+/* align the bottom edges of each element (or right edges for a vstack) */
+.hstack.bottom, .vstack.right { align-items: flex-end; }
+/* put extra space between elements */
+:is(.hstack, .vstack).gap { gap: 5px; }
+:is(.hstack, .vstack).gap1 { gap: 10px; }
+:is(.hstack, .vstack).gap2 { gap: 20px; }
+:is(.hstack, .vstack).gap3 { gap: 30px; }
+
+/* colored strip on the left edge of a manual page, e.g. Morsematics */
+.page.strip {
+    position: relative;
+    --strip-color: #FF0000;
+}
+.page.strip::before {
+    content: '';
+    position: absolute;
+    width: .85cm;
+    inset: 0 auto 0 0;
+    opacity: 0.3;
+    background-color: var(--strip-color);
+    -webkit-print-color-adjust: exact;
+}
+@media print {
+    .page.strip::before {
+        display: none;
+    }
+}
+@media screen and (max-width: 900px) {
+    .page.strip::before {
+		width: .3cm;
     }
 }
