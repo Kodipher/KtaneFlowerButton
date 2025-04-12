@@ -1,3 +1,7 @@
+#define DONT_COMPILE_MODKIT_EASING
+
+#if !DONT_COMPILE_MODKIT_EASING
+
 using UnityEngine;
 // ReSharper disable UnusedMember.Global
 
@@ -155,3 +159,5 @@ public static class Easing
         return (end - start) * val + start;
     }
 }
+
+#endif
