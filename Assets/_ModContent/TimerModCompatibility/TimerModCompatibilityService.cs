@@ -6,7 +6,7 @@ namespace FlowerButtonMod.TimerModCompatibility {
 
 	public class TimerModCompatibilityService : MonoBehaviour {
 
-		const string ServiceName = "FlowerButtonTimerModCompatibilityService";
+		const string ServiceName = "FlowerButtonTimerModCompatibility";
 
 		#region //// Components and parts
 
