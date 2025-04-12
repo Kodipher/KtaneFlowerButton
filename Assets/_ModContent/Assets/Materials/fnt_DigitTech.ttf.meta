@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 6aaabdd74e731b646a25b418fb4d6bc2
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 72
+  forceTextureCase: 3
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Digit Tech 7
+  fontNames:
+  - Digit Tech 7
+  fallbackFontReferences: []
+  customCharacters: "0123456789_- Er\u039E"
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: mod.bundle
+  assetBundleVariant: 
