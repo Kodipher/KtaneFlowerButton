@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 
-namespace FlowerButton.Settings {
+namespace FlowerButtonModule.FlowerButton.Settings {
 
 	/// <summary>
 	/// A settings "data" class containing user configuarion of this mod.
