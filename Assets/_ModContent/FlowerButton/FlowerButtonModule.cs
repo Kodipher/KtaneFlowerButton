@@ -319,6 +319,7 @@ namespace FlowerButtonMod.FlowerButton {
 		void OnBombExploded() {
 			distortionManager.RemoveDistortionFromCamera();
 			RestoreTime();
+			StopMusicBox();
 			penaltyTimeLeft = TimeSpan.Zero;
 		}
 
