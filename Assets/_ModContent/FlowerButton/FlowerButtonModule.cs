@@ -313,6 +313,7 @@ namespace FlowerButtonMod.FlowerButton {
 			animationRunner?.Dispose();
 			distortionManager.RemoveDistortionFromCamera();
 			RestoreTime();
+			StopMusicBox();
 		}
 
 		void OnBombExploded() {
