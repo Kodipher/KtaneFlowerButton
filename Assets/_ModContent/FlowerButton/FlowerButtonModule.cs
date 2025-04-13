@@ -44,6 +44,7 @@ namespace FlowerButtonMod.FlowerButton {
 		// Stuff for solution
 		int[] validReleaseTimes = null;
 		internal TimerDisplayOverride timerOverride = null;
+		int chosenReleaseTime = -1;
 
 		#endregion
 
@@ -761,9 +762,9 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 
 			// Check solution
-			int releaseTime = GetCountdownDisplayNumber(); // calculation, not display reading
-			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display", releaseTime);
-			bool isCorrect = validReleaseTimes.Contains(releaseTime);
+			chosenReleaseTime = GetCountdownDisplayNumber(); // calculation, not display reading
+			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display", chosenReleaseTime);
+			bool isCorrect = validReleaseTimes.Contains(chosenReleaseTime);
 
 			if (isCorrect) {
 
@@ -787,7 +788,7 @@ namespace FlowerButtonMod.FlowerButton {
 				// Set penalty
 				// (wont be deducted until time is restored)
 				double currentPenaltyBaseLine;
-				CalculateAndSetPenalty(releaseTime, out currentPenaltyBaseLine);
+				CalculateAndSetPenalty(chosenReleaseTime, out currentPenaltyBaseLine);
 
 				logger.LogStringFormat("Penalties start at {0:F2}", currentPenaltyBaseLine);
 				if (penaltyTimeLeft > TimeSpan.Zero) {
@@ -806,7 +807,7 @@ namespace FlowerButtonMod.FlowerButton {
 				state = State.Striking;
 				releaseSoundRef.StopSound();
 
-				countdownText.text = releaseTime.ToString("D2");
+				countdownText.text = chosenReleaseTime.ToString("D2");
 				kmAudio.PlaySoundAtTransform(SoundCatalogue.VoOopsLaughter, transform);
 				yield return CoroutineYield.Sleep(solutionCheckOopsDuration);
 
