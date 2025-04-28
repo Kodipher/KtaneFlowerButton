@@ -14,13 +14,30 @@ MonoBehaviour:
   id: flowerButtonModule
   title: Flower Button
   author: Kodipher
-  description: "[i]\"But have you forgotten someone, my gray-haired friend?\"[/i]\n\nA
-    module with a single button. Go ahead. Press it and light up the sky with fireworks!\n\nThe
-    mod also comes with a service to achieve compatibility with the BombTimerModifier.\n\nModule
-    ID: kdiFlowerButton\n\nManual HTML: https://ktane.timwi.de/HTML/Flower%20Button.html\nManual
-    PDF: https://ktane.timwi.de/PDF/Flower%20Button.pdf\n\n[hr][/hr]\n\nMusic: Monodrama
-    (music box arrangement) by \rR3 Music Box. Original by HOYO-MIX.\nSFX (incl. VO)
-    and Sparkle sticker sprite are from Honkai: Star Rail and are owned by HoYoverse"
+  description: '[i]"But have you forgotten someone, my gray-haired friend?"[/i]
+
+
+    A module with a single button. Go ahead. Press it and light up the sky with fireworks!
+
+
+    The mod also comes with a service to achieve compatibility with the BombTimerModifier.
+
+
+    Module ID: kdiFlowerButton
+
+
+    Manual HTML: https://ktane.timwi.de/HTML/Flower%20Button.html
+
+    Manual PDF: https://ktane.timwi.de/PDF/Flower%20Button.pdf
+
+
+    [hr][/hr]
+
+
+    Music: Monodrama (music box arrangement) by R3 Music Box. Original by HOYO-MIX.
+
+    SFX (incl. VO) and Sparkle sticker sprite are from Honkai: Star Rail and are owned
+    by HoYoverse'
   version: 1.0.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: ce4670b1c20e7954cb38040cb699c749, type: 3}
