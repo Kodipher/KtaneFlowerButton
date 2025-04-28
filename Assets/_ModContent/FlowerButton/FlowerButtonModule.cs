@@ -330,7 +330,10 @@ namespace FlowerButtonMod.FlowerButton {
 		void OnSapError() {
 			logger.LogString("Could not sap timer display. Triggering failsafe. Module solved.");
 			countdownText.text = CountdownTextError;
+
 			state = State.Solved;
+			fakeStatusLight.HandlePass();
+
 			RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
 			StopMusicBox();
