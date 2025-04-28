@@ -11,7 +11,7 @@ namespace FlowerButtonMod.FlowerButton {
 			distortionMaterialTemplate = distortionMaterial;
 		}
 
-		Material distortionMaterialTemplate;
+		readonly Material distortionMaterialTemplate;
 		CameraEffect curentCameraEffect;
 
 		public void AddDistortionToCamera() {
