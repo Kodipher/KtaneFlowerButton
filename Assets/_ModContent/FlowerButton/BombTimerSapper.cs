@@ -13,8 +13,12 @@ namespace FlowerButtonMod.FlowerButton {
 
 		readonly KMBombModule sappingModule;
 
+		// Cache
 		object cachedBombReference = null;
 		object cachedTimerComponentDisplayTextMeshPro = null;
+
+		bool? serviceObjectExists = null;	// null if not checked (cache not populated)
+		object cachedServiceObject = null;
 
 		/// <returns>true if could sap the timer</returns>
 		public bool SapBombTimerForOneFrame(string displayOverride) {
@@ -51,9 +55,13 @@ namespace FlowerButtonMod.FlowerButton {
 			// Override for 1 frame
 			cachedTimerComponentDisplayTextMeshPro.SetValue("text", displayOverride);
 
-			// Also give notice to the patcher
-			var compatibilityService = Object.FindObjectOfType<TimerModCompatibilityService>();
-			if (compatibilityService == null) return true;
+			// Also give notice to the patcher, if exists
+			if (serviceObjectExists == null) {
+				cachedServiceObject = Object.FindObjectOfType<TimerModCompatibilityService>();
+				serviceObjectExists = cachedServiceObject != null;
+			}
+
+			if (!serviceObjectExists.Value) return true;
 
 			TimerModifierPatcher.OverrideNewBombTimerForOneFrame(
 				cachedBombReference,
