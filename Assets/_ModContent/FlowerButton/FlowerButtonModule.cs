@@ -183,6 +183,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		internal BombTimerSapper timerSapper;
 		internal CameraDistortionManager distortionManager;
+		internal TimerModifierPatcher timerModPatcher;
 
 		internal KMSelectable buttonSelectable;
 		internal Transform buttonFlowerTransform;
@@ -214,6 +215,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Parts
 			timerSapper = new BombTimerSapper(kmModule);
 			distortionManager = new CameraDistortionManager(cameraDistortionEffectMaterialOriginal);
+			timerModPatcher = new TimerModifierPatcher(new ModuleLogger($"{kmModule.ModuleDisplayName}.TimerModifierPatcher"));
 
 			// Button
 			var buttonTransform = transform.Find("button");
@@ -314,6 +316,7 @@ namespace FlowerButtonMod.FlowerButton {
 			distortionManager.RemoveDistortionFromCamera();
 			RestoreTime();
 			StopMusicBox();
+			timerModPatcher.TryUnpatch();
 		}
 
 		void OnBombExploded() {
@@ -616,11 +619,15 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 
 			// Init first display override
+			bool isModdedTimerNotThereOrPatched = timerModPatcher.TryPatch();
 			timerOverride.TickDisplay();
 
 			// Begin countdown
 			countdownText.text = GetCountdownDisplayNumber().ToString("D2");
 			state = State.Held;
+
+			// Patch error failsafe
+			if (!isModdedTimerNotThereOrPatched) OnSapError();
 
 			yield break;
 		}

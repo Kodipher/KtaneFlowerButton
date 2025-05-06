@@ -11,7 +11,7 @@ using System.Reflection;
 using HarmonyLib;
 
 
-namespace FlowerButtonMod.TimerModCompatibility {
+namespace FlowerButtonMod.FlowerButton {
 
 	/// <summary>
 	/// <para>
@@ -54,6 +54,8 @@ namespace FlowerButtonMod.TimerModCompatibility {
 		internal ModuleLogger logger;
 		internal Harmony harmony;
 
+		private static readonly object patchingLock = new object();
+
 		public TimerModifierPatcher(ModuleLogger logger)  {
 			this.logger = logger;
 			harmony = new Harmony(HarmonyId);
@@ -65,8 +67,7 @@ namespace FlowerButtonMod.TimerModCompatibility {
 		}
 
 		/// <summary>Applies the patch if it is not there.</summary>
-		/// <returns>true if the patch was applied or was already there.</returns>
-		public bool PatchOrConfirm() {
+		public void PatchOrConfirm() {
 
 			// Try find the class and method
 			Type modifiedTimerComponentClass = 
@@ -89,44 +90,38 @@ namespace FlowerButtonMod.TimerModCompatibility {
 					"Could not find modified timer commonent class or target method. " +
 					"Mod might not be loaded. Skipping patch."
 				);
-				return false;
+				return;
 			}
 
-			// Check if the patch already exists
-			Patches patches = Harmony.GetPatchInfo(originalMethod);
-			if (patches != null) {
-				if (patches.Postfixes.Where(patch => patch.owner == HarmonyId).Any()) {
-					logger.LogString("Modified timer component is already patched.");
-					return true;
+			
+			lock (patchingLock) {
+
+				// Check if the patch already exists
+				Patches patches = Harmony.GetPatchInfo(originalMethod);
+				if (patches != null) {
+					if (patches.Postfixes.Where(patch => patch.owner == HarmonyId).Any()) {
+						logger.LogString("Modified timer component is already patched.");
+						return;
+					}
 				}
+
+				// Patch
+				logger.LogString("Performing modified timer patch.");
+
+				const string patchName = nameof(PostfixPatch_CustomTimerComponent_CustomUpdate_MoveNext);
+				var postfixPatchMethodInfo = typeof(TimerModifierPatcher).GetMethod(patchName);
+
+				harmony.Patch(originalMethod, postfix: new HarmonyMethod(postfixPatchMethodInfo));
 			}
-
-			// Patch
-			logger.LogString("Performing modified timer patch.");
-
-			const string patchName = nameof(PostfixPatch_CustomTimerComponent_CustomUpdate_MoveNext);
-			var postfixPatchMethodInfo = typeof(TimerModifierPatcher).GetMethod(patchName);
-
-			harmony.Patch(originalMethod, postfix: new HarmonyMethod(postfixPatchMethodInfo));
-
-			return true;
 		}
 
-		/// <summary>Removes the applied patch.</summary>
-		/// <remarks>
-		/// Might be called if patching fails midway or completely. 
-		/// In that case the applied patch might be partial or be not there at all.
-		/// </remarks>
-		public void Unpatch() {
-			logger.LogString("Removing harmony patches.");
-			harmony.UnpatchAll(HarmonyId);
-		}
-
+		/// <returns>true if the patch was applied, was already there, or was not needed.</returns>
 		public bool TryPatch() {
 
 			try {
-				logger.LogString($"Patching Bomb Timer Modifier.");
-				return PatchOrConfirm();
+				logger.LogString($"Patching Bomb Timer Modifier...");
+				PatchOrConfirm();
+				return true;
 			} catch (System.Exception ex) {
 				logger.LogException(ex);
 				logger.LogString($"Bomb Timer Modifier patch failed.");
@@ -136,15 +131,21 @@ namespace FlowerButtonMod.TimerModCompatibility {
 
 		}
 
+		/// <summary>Removes the applied patch.</summary>
 		/// <returns>true if the patch was removed or is not there.</returns>
 		public bool TryUnpatch() {
 			try {
-				logger.LogString($"Unpatching Bomb Timer Modifier.");
-				Unpatch();
-				return true;
+
+				lock (patchingLock) {
+					logger.LogString("Trying to unpatching Bomb Timer Modifier...");
+					logger.LogString("Removing harmony patches if exist.");
+					harmony.UnpatchAll(HarmonyId);
+					return true;
+				}
+
 			} catch (System.Exception ex) {
 				logger.LogException(ex);
-				logger.LogString($"Bomb Timer Modifier patch removal failed.");
+				logger.LogString("Bomb Timer Modifier patch removal failed.");
 				return false;
 			}
 		}
