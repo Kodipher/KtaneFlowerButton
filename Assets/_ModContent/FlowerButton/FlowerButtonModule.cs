@@ -233,16 +233,10 @@ namespace FlowerButtonMod.FlowerButton {
 			countdownText.text = CountdownTextAwaitingLights;
 			countdownLight.range *= transform.lossyScale.x;
 
-			// Logger
+			// Misc.
 			logger = new ModuleLogger(kmModule);
-
-			// Rng
 			rng = new System.Random(UnityEngine.Random.Range(0, int.MaxValue));
-
-			// Animation player
 			animationRunner = new AnimationRunner();
-
-			// Settings
 			settings = SettingsReader.ReadSettings();
 
 		}
@@ -466,7 +460,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#region //// Time manipulation
 
-		// Prevent multiple buttons from being held (vr)
+		// Prevent multiple buttons from being held
 		private static readonly object gameTimeManipulationLock = new object();
 		private static bool isAnyButtonMaupulatingTime = false;
 
