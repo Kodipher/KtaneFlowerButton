@@ -8,7 +8,7 @@ using FlowerButtonMod.Utils;
 
 namespace FlowerButtonMod.FlowerButton {
 
-	internal class TimerDisplayOverride {
+	internal class SappedDisplayGenerator {
 
 		#region //// Params + constructor
 
@@ -17,7 +17,7 @@ namespace FlowerButtonMod.FlowerButton {
 		public int?[] PreferredDigits { get; /*init;*/ }
 
 		/// <param name="preferredDigits">Array of preferred digits (or null for no preference), highest digit first.</param>
-		public TimerDisplayOverride(int?[] preferredDigits, System.Random rng) {
+		public SappedDisplayGenerator(int?[] preferredDigits, System.Random rng) {
 			PreferredDigits = preferredDigits;
 			Rng = rng;
 
@@ -136,6 +136,7 @@ namespace FlowerButtonMod.FlowerButton {
 			DisplayOverride = display;
 		}
 
+		/// <summary>The current sapped display to be used</summary>
 		public string DisplayOverride { get; private set; } = "";
 
 		#endregion

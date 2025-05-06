@@ -43,7 +43,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		// Stuff for solution
 		int[] validReleaseTimes = null;
-		internal TimerDisplayOverride timerOverride = null;
+		internal SappedDisplayGenerator timerOverride = null;
 		int chosenReleaseTime = -1;
 
 		#endregion
@@ -402,7 +402,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Generate the rule
 			int?[] preferredDigits;
 			ReleaseRuleGenerator.GenerateReleaseRule(rng, out preferredDigits, out validReleaseTimes);
-			timerOverride = new TimerDisplayOverride(preferredDigits, rng);
+			timerOverride = new SappedDisplayGenerator(preferredDigits, rng);
 
 			logger.LogStringFormat(
 				"Preferred digits: " +
