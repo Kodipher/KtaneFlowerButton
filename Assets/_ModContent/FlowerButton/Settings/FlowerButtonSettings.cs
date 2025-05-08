@@ -4,10 +4,10 @@
 namespace FlowerButtonMod.FlowerButton.Settings {
 
 	/// <summary>
-	/// A settings "data" class containing user configuarion of this mod.
-	/// Is not immutable but also is not global.
+	/// Contains user configuarion of this mod.
+	/// Is not immutable and is not global.
 	/// </summary>
-	public class FlowerButtonSettings {
+	public /*record*/ class FlowerButtonSettings {
 
 		public const int CurrentVersion = 1;
 
