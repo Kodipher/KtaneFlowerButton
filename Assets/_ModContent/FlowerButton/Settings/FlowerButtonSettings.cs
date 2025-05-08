@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 
 namespace FlowerButtonMod.FlowerButton.Settings {
@@ -25,6 +26,32 @@ namespace FlowerButtonMod.FlowerButton.Settings {
 
 		[JsonProperty("disable_musicbox")]
 		public bool disableMusicbox = false;
+
+	}
+
+	public static class FlowerButtonSettingsTweaksAnnotations {
+
+		public static Dictionary<string, object>[] TweaksEditorSettings = new Dictionary<string, object>[] {
+			
+			new Dictionary<string, object>() {
+				{ "Filename", "FlowerButtonSettings.json" },
+				{ "Name", "Flower Button" },
+				{ 
+					"Listings",
+					new List<Dictionary<string, object>> {
+						new Dictionary<string, object> { { "Key", "version" }, { "Type", "Hidden" } },
+						new Dictionary<string, object> { { "Key", "readme" }, { "Type", "Hidden" } },
+						
+						new Dictionary<string, object> { { "Text", "Note: These settings are meant for accessibility" }, { "Type", "Section" } },
+						new Dictionary<string, object> { { "Key", "disable_forced_detonation" }, { "Text", "Disable Forced Detonation" }, { "Description", "If enabled, the module only strikes once and resets." } },
+						new Dictionary<string, object> { { "Key", "disable_visual_distortion" }, { "Text", "Disable Visual Distortion" } },
+						new Dictionary<string, object> { { "Key", "disable_musicbox" }, { "Text", "Disable Musicbox" } },
+					}
+				}
+			}
+			// [end of FlowerButtonSettings.json annotations]
+
+		};
 
 	}
 
