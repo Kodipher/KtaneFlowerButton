@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DONT_COMPILE_OBSOLTETE_MODKIT_GENERAL_EXTENSIONS
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -201,6 +204,7 @@ public static class GeneralExtensions
         dic[key].Add(value);
     }
 
+#if !DONT_COMPILE_OBSOLTETE_MODKIT_GENERAL_EXTENSIONS
     /// <summary>
     ///     Brings the elements of the given list into a random order.</summary>
     /// <typeparam name="T">
@@ -225,7 +229,9 @@ public static class GeneralExtensions
         }
         return list;
     }
+#endif
 
+#if !DONT_COMPILE_OBSOLTETE_MODKIT_GENERAL_EXTENSIONS
     /// <summary>
     ///     Returns a random element from the specified collection.</summary>
     /// <typeparam name="T">
@@ -245,6 +251,7 @@ public static class GeneralExtensions
             throw new InvalidOperationException("Cannot pick an element from an empty set.");
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
+#endif
 
     public static bool TryParseTime(this string timeString, out float time)
     {
