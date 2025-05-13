@@ -1,0 +1,620 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rephidock.GeneralUtilities.NetFramework35</name>
+    </assembly>
+    <members>
+        <member name="T:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions">
+            <summary>
+            Provides extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
+            which were added in future versions of .NET
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions.Append``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>Appends a value to the end of the sequence.</summary>
+            <typeparam name="T"></typeparam>
+            <param name="source">Sequence of values to append to</param>
+            <param name="item">The value to append</param>
+            <returns>A new sequence that ends with the appended element</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions.Prepend``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>Prepends a value to the start of the sequence.</summary>
+            <typeparam name="T"></typeparam>
+            <param name="source">Sequence of values to prepend to</param>
+            <param name="item">The value to prened</param>
+            <returns>A new sequence that starts with the prepended element</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions.Zip``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1})">
+            <summary>
+            Produces a sequence of pairs with elements from the two specified sequences.
+            </summary>
+            <typeparam name="TFirst">The type of the elements of the first input sequence</typeparam>
+            <typeparam name="TSecond">The type of the elements of the second input sequence.</typeparam>
+            <param name="first">The first sequence to merge.</param>
+            <param name="second">The second sequence to merge.</param>
+            <returns>
+            An <see cref="T:System.Collections.Generic.IEnumerable`1"/> that contains merged elements of two input sequences
+            </returns>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions">
+            <summary>
+            Provides extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.Yield``1(``0)">
+            <summary>
+            Returns an IEnumerable with a single given item
+            (yields given item)
+            </summary>
+            <typeparam name="T">The type of the item</typeparam>
+            <param name="item">The item to yield</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Joins elements into a single delimited string.
+            (Fluently performs <see cref="M:System.String.Join(System.String,System.String[])"/>)
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString``1(System.Collections.Generic.IEnumerable{``0},System.Char)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString``1(System.Collections.Generic.IEnumerable{``0},System.String)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString(System.Collections.Generic.IEnumerable{System.Char})">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString(System.Char[])"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString(System.Char[])">
+            <summary>
+            Joins an array of characters into a string.
+            (Fluent way to call <see cref="M:System.String.#ctor(System.Char[])"/>)
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.JoinString(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Joins part of an array of characters into a string.
+            (Fluent way to call <see cref="M:System.String.#ctor(System.Char[],System.Int32,System.Int32)"/>)
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions.SplitIntoSegments``1(``0[],``0[])">
+            <summary>
+            <para>
+            Creates a sequence of <see cref="T:System.ArraySegment`1"/>s based on
+            a given array and delimiters.
+            </para>
+            <para>
+            Note that a segment is only a view on the source array.
+            </para>
+            </summary>
+            <param name="array">The array to split.</param>
+            <param name="separators">The delimiters to split by.</param>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Collections.Lazy`1">
+            <summary>
+            Provides support for lazy initialization.
+            </summary>
+            <typeparam name="T">The type of element being lazily initialized.</typeparam>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Lazy`1.#ctor(`0)">
+            <summary>
+            Creates a new instance of the <see cref="T:Rephidock.GeneralUtilities.Collections.Lazy`1"/>
+            with a pre-initialized specified value.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Lazy`1.#ctor(System.Func{`0})">
+            <summary>
+            Creates a new instance of the <see cref="T:Rephidock.GeneralUtilities.Collections.Lazy`1"/>
+            with a specified value initialization function.
+            </summary>
+            <param name="valueFactory">
+            The <see cref="T:System.Func`1"/> invoked to produce the lazily-initialized value when it is
+            needed.
+            </param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="valueFactory"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Collections.Lazy`1.Value">
+            <summary>
+            <para>
+            Gets the lazily initialized value of the current <see cref="T:Rephidock.GeneralUtilities.Collections.Lazy`1"/>.
+            </para>
+            <para>
+            If <see cref="P:Rephidock.GeneralUtilities.Collections.Lazy`1.IsValueCreated"/> is <see langword="false"/>,
+            accessing <see cref="P:Rephidock.GeneralUtilities.Collections.Lazy`1.Value"/> will force initialization.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Collections.Lazy`1.IsValueCreated">
+            <summary>
+            <see langword="true"/> if the <see cref="P:Rephidock.GeneralUtilities.Collections.Lazy`1.Value"/> of this <see cref="T:Rephidock.GeneralUtilities.Collections.Lazy`1"/>
+            has been initialized.
+            </summary>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Collections.Pair`2">
+            <summary>
+            <para>
+            Represent a pair of values.
+            Equivalent to ValueTuple in future versions of .NET
+            </para>
+            <para>
+            Unlike <see cref="T:System.Collections.Generic.KeyValuePair`2"/> there
+            is no implied relation between the items of the pair.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Collections.Pair`2.First">
+            <summary>The first item of this pair.</summary>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Collections.Pair`2.Second">
+            <summary>The second item of this pair.</summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.#ctor(`0,`1)">
+            <summary>Creates a generic pair of two items.</summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.op_Implicit(System.Collections.Generic.KeyValuePair{`0,`1})~Rephidock.GeneralUtilities.Collections.Pair{`0,`1}">
+            <summary>
+            Implicitly converts a <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            into a <see cref="T:Rephidock.GeneralUtilities.Collections.Pair`2"/>. The key becomes the first item.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.Equals(System.Object)">
+            <summary>Returns <see langword="true"/> if the provided object is equal to this pair.</summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.Equals(Rephidock.GeneralUtilities.Collections.Pair{`0,`1})">
+            <summary>
+            Returns <see langword="true"/> if the provided pair is equal to this pair.
+            Two pairs are equal if their corresponding elements are equal.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Collections.ReadOnlyExtensions">
+            <summary>
+            Provides extensions added in .net7 to fluently
+            create readonly collections to .net6
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.ReadOnlyExtensions.AsReadOnly``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Returns a readonly <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1"/>
+            wrapper for the given list.
+            (Fluent way to call ReadOnlyCollection's constructor)
+            </summary>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Maths.MoreMath">
+            <summary>
+            Provides static methods for some
+            arithmetic functions.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)">
+            <summary>
+            Linearly interpolates between 2 points.
+            The result is not clamped.
+            </summary>
+            <param name="start">The start of interpolation</param>
+            <param name="end">The end of interpolation</param>
+            <param name="amount">
+            <para>
+            Interpolation amount.
+            </para>
+            <para>
+            Value of <c>0</c> results in <paramref name="start"/>.
+            Value of <c>1</c> results in <paramref name="end"/>.
+            </para>
+            </param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Double,System.Double,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Int32,System.Int32,System.Single)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Int64,System.Int64,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Byte,System.Byte,System.Single)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.InverseLerp(System.Single,System.Single,System.Single)">
+            <summary>
+            <para>
+            An operation inverse to <see cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Lerp(System.Single,System.Single,System.Single)"/>.
+            </para>
+            <para>
+            If <c>r = Lerp(a, b, x)</c> then <c>x = InverseLerp(a, b, r)</c>.
+            </para>
+            </summary>
+            <param name="start">The start of interpolation</param>
+            <param name="end">The end of interpolation</param>
+            <param name="value">The result of linear interpolation</param>
+            <returns>The amount of interpolation</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.InverseLerp(System.Double,System.Double,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.InverseLerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.TabShift(System.Int32,System.Int32)">
+            <summary>
+            For a given 0-based column position of a tab character (<c>'\t'</c>)
+            returns a column position for the next character.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Int32,System.Int32)">
+            <summary>
+            <para>
+            Returns (the positive) <c>value mod modulo</c>.
+            Keep in mind that % is the remainder operation.
+            The result of this function is always positive or zero, as opposed to remainder.
+            </para>
+            <para>
+            Example differences:
+            <list>
+            <item><c>-1 % 6 = -1</c> -but- <c>-1 mod 6 = 5</c></item>
+            <item><c>-5 % 3 = -2</c> -but- <c>-5 mod 3 = 1</c></item>
+            </list>
+            </para>
+            </summary>
+            <exception cref="T:System.ArgumentException"><paramref name="modulo"/> is 0</exception>
+            <exception cref="T:System.NotSupportedException"><paramref name="modulo"/> is negative</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Single,System.Single)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Double,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Int64,System.Int64)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.PosMod(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            <para>
+            Wraps value into given range:
+            values below the range are wrapped into it from the end and
+            values above are wrapped into it from the start
+            </para>
+            <para>
+            Can be thought of as a generilized version of <c>PosMod</c>, as
+            <c>x.Wrap(0, y)</c> returns the same result as <c>x.PosMod(y)</c>
+            </para>
+            </summary>
+            <param name="value">The value to wrap</param>
+            <param name="min">The start of the range, inclusive</param>
+            <param name="max">The end of the range, exclusive</param>
+            <remarks>
+            If <paramref name="min"/> is greater than <paramref name="max"/>, the values are swapped.
+            If <paramref name="min"/> and <paramref name="max"/> are equal, <paramref name="min"/> is returned.
+            </remarks>
+            <returns>The value wrapped to be inside the range</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Single,System.Single,System.Single)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Double,System.Double,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Int64,System.Int64,System.Int64)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.Wrap(System.Int32,System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.GetFactors(System.Int32)">
+            <summary>
+            <para>
+            Returns all prime factors of an integer in ascending order
+            (Performs prime factorization).
+            </para>
+            <para>
+            This function was extended to work on all integers.
+            Special cases apply if <paramref name="n"/> is below 2.
+            </para>
+            <para>
+            If <paramref name="n"/> is <c>0</c>, <c>1</c> or <c>-1</c>, then <paramref name="n"/> is returned;
+            If <paramref name="n"/> is below <c>-1</c>, then <c>-1</c> is returned,
+            followed by prime factors of <c>abs(<paramref name="n"/>)</c>.
+            </para>
+            </summary>
+            <param name="n">The value to return factors of</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.DegToRad(System.Single)">
+            <summary>
+            Converts angle measured in degrees to angle measured in radians
+            </summary>
+            <param name="angleDegrees">Angle measured in degrees</param>
+            <returns>Angle measured in radians</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.RadToDeg(System.Single)">
+            <summary>
+            Converts angle measured in radians to angle measured in degrees
+            </summary>
+            <param name="angleRadians">Angle measured in radians</param>
+            <returns>Angle measured in degrees</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.DegToRad(System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.DegToRad(System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.RadToDeg(System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.RadToDeg(System.Single)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.AngleDifference(System.Single,System.Single)">
+            <summary>
+            Given two angles calculates the shortest distance,
+            taking the circle over/underflow into account.
+            </summary>
+            <param name="angleSourceRadians">First angle, measured in radians</param>
+            <param name="angleDestinationRadians">Second angle, measured in radians</param>
+            <remarks>
+            Returned distance is in range of <c>[-<see cref="F:System.Math.PI"/>, <see cref="F:System.Math.PI"/>)</c>.
+            </remarks>
+            <returns>Shortest distance between two angles.</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.MoreMath.AngleDifference(System.Double,System.Double)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.MoreMath.AngleDifference(System.Single,System.Single)"/>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Maths.RadixMath">
+            <summary>
+            Provides methods for convertsion of numbers to/from digit arrays in arbitrary bases
+            and radix-related maths.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.DigitalRoot(System.Int32,System.Int32)">
+            <summary>
+            Calculates the digital root of a number.
+            Digital root is calculated by taking the sum of all of
+            the number's digits, and then that sum, until the result is a single digit.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="value"/> is negative or
+            <paramref name="radix"/> is smaller than 2
+            </exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.DigitalRoot(System.Int64,System.Int64)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.RadixMath.DigitalRoot(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.ToDigits(System.Int64,System.UInt16,System.Int32)">
+            <summary>
+            Converts a value into an arbitrary base,
+            returning arrays of digits in that base,
+            units place last.
+            </summary>
+            <param name="value">The value to convert. If negative, absolute is used.</param>
+            <param name="radix">The base of the returned number</param>
+            <param name="padToPlaces">
+            <para>The number of places to pre-pad the number to with zeros.</para>
+            <para>The resulting array can be larger if there are not enough digits.</para>
+            </param>
+            <exception cref="T:System.ArgumentException"><paramref name="radix"/> is below 2</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.ToDigits(System.Int32,System.UInt16,System.Int32)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Maths.RadixMath.ToDigits(System.Int64,System.UInt16,System.Int32)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.FromDigits(System.UInt16[],System.UInt16)">
+            <summary>
+            Converts an array of digits in a given base,
+            units place last, into an integer value.
+            </summary>
+            <param name="digits">The digits to convert, units place last</param>
+            <param name="radix">The base of the returned number</param>
+            <exception cref="T:System.ArgumentException"><paramref name="radix"/> is below 2</exception>
+            <exception cref="T:System.OverflowException">Resulting value is too big for a <see cref="T:System.Int64"/></exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Maths.RadixMath.CountAllAscending(System.UInt16,System.Int32)">
+            <summary>
+            <para>
+            Enumerates all positive numbers in an arbitrary base
+            up to a given digit length,
+            returning arrays of digits in that base,
+            units place last.
+            </para>
+            <para>
+            Starts with array of zeros.
+            Digit at the end of the array is incremented first.
+            </para>
+            </summary>
+            <param name="radix">The base of the counter (exclusive maxim value of individual digits)</param>
+            <param name="places">The number of the digits in the counter</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="radix"/> is smaller than 2 or
+            <paramref name="places"/> is smaller than 1
+            </exception>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions">
+            <summary>
+            Provides extensions for <see cref="T:System.Random"/>
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.NextUInt31(System.Random)">
+            <summary>
+            Returns a non-negative random <see cref="T:System.Int32"/>.
+            Unlike <see cref="M:System.Random.Next"/>, includes
+            <see cref="F:System.Int32.MaxValue"/> as a possible value.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.Chance(System.Random,System.Double)">
+            <summary>
+            Returns <see langword="true"/> with %-chance (0 to 1 both inclusive)
+            </summary>
+            <param name="rng">The random number generator</param>
+            <param name="chance">The chance of <see langword="true"/> being returned</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.GetItem``1(System.Random,System.Collections.Generic.IList{``0})">
+            <summary>Returns a random item form a list or span</summary>
+            <typeparam name="T">The type of the item</typeparam>
+            <param name="items">List of items to pick from</param>
+            <param name="rng">Random number generator</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.PickRandom``1(System.Collections.Generic.IList{``0},System.Random)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.GetItem``1(System.Random,System.Collections.Generic.IList{``0})"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.PickMultipleDifferent``1(System.Collections.Generic.ICollection{``0},System.Int32,System.Random)">
+            <summary>
+            Picks multiple different items from a collection.
+            Retains order the items were in.
+            </summary>
+            <typeparam name="T">The type of items in the collection</typeparam>
+            <param name="items">The collection to pick items from</param>
+            <param name="count">The number of items to pick</param>
+            <param name="rng">Random number generator</param>
+            <remarks>Uses Reservoir sampling</remarks>
+            <returns>An array of picked items in the order they were in collection.</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.GetDifferentItems``1(System.Random,System.Collections.Generic.ICollection{``0},System.Int32)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.PickMultipleDifferent``1(System.Collections.Generic.ICollection{``0},System.Int32,System.Random)"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.Shuffle``1(System.Random,System.Collections.Generic.IList{``0})">
+            <summary>
+            Shuffles a list in-place (mutates the array).
+            </summary>
+            <param name="rng">The random number generator</param>
+            <param name="values">The values to shuffle</param>
+            <remarks>Performs Durstenfeld's version of Fisher–Yates shuffle</remarks>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.Shuffle``1(System.Collections.Generic.IList{``0},System.Random)">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.Shuffle``1(System.Random,System.Collections.Generic.IList{``0})"/>
+            <returns>The list operated on.</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.ShuffleRemap``1(System.Collections.Generic.IList{``0},System.Random)">
+            <summary>
+            <para>
+            Shuffles the given list and also
+            gives the mapping of old indexes to new indexes.
+            </para>
+            <para>
+            Shuffles in-place (mutates the list).
+            </para>
+            </summary>
+            <param name="values">List to shuffle</param>
+            <param name="rng">The random number generator</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.ShuffleRemap``1(System.Random,System.Collections.Generic.IList{``0})">
+            <inheritdoc cref="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.ShuffleRemap``1(System.Collections.Generic.IList{``0},System.Random)"/>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap">
+            <summary>
+            A collection of index pairs, where
+            key is the old index and value is the new index.
+            Can be used for tracking where the items ended up.
+            </summary>
+            <remarks>
+            Is an abstraction over a shuffled array of indexes.
+            </remarks>
+        </member>
+        <member name="F:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.oldToNew">
+            <summary>An array which translates old indexes to new indexes</summary>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.Count">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.#ctor(System.Int32)">
+            <summary>
+            Generates an identity index mapping.
+            (each index is mapped to itself)
+            </summary>
+            <param name="size">Number of indexes in the mapping</param>
+            <exception cref="T:System.ArgumentException"><paramref name="size"/> is negative</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.#ctor(System.Int32,System.Random)">
+            <summary>Generates a random mapping that can be used for shuffling.</summary>
+            <param name="size">Number of indexes in the shuffle</param>
+            <param name="rng">The random number generator</param>
+            <exception cref="T:System.ArgumentException"><paramref name="size"/> is negative</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.ApplyTo``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Applies mapping to the list.
+            Mutates the list.
+            </summary>
+            <param name="values">List to shuffle</param>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.ToArrayOfIndexes">
+            <summary>
+            Returns array of new positions at indexes of old positions.
+            </summary>
+            <remarks>
+            Essentially copies the internal index array without the abstraction.
+            </remarks>
+        </member>
+        <member name="P:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.Item(System.Int32)">
+            <summary>
+            Returns the new position, corresponding to an old position.
+            </summary>
+            <param name="oldIndex">The index to use as a key (old index).</param>
+            <returns>New index, corresponding to the old index.</returns>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Reflection.EnumConverter`2">
+            <summary>
+            <para>
+            A generic converter between an enum and an integer type.
+            Created for use with enums as generics.
+            </para>
+            <para>
+            Checks integers to be defined enum entries.
+            </para>
+            </summary>
+            <remarks>
+            Taken from <see href="https://github.com/dotnet/csharplang/discussions/1993"/>
+            </remarks>
+            <typeparam name="TEnum">Enum to convert</typeparam>
+            <typeparam name="TInt">Base integer type of the enum</typeparam>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.EnumConverter`2.ToInt(`0)">
+            <summary>Converts a generic Enum to the base integer type</summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.EnumConverter`2.ToEnum(`1)">
+            <summary>
+            Converts from an integer to generic Enum type.
+            Throws on values not defined in the enum.
+            </summary>
+            <exception cref="T:System.InvalidCastException">Value is not defined in the enum</exception>
+        </member>
+        <member name="T:Rephidock.GeneralUtilities.Reflection.ReflectionExtensions">
+            <summary>
+            Provides static extension methods for reflection.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.ReflectionExtensions.IsSubclassOrSelfOf(System.Type,System.Type)">
+            <summary>
+            <para>
+            Returns true if the given <paramref name="derivedType"/> is
+            <paramref name="baseType"/> or a subclass of it.
+            </para>
+            <para>
+            Also supports generic type definitions.
+            Does not support interfaces.
+            </para>
+            <para>
+            (net framework 3.5) Does not support enums.
+            </para>
+            </summary>
+            <remarks>
+            For array types return true only on type equality.
+            </remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="baseType"/> is null</exception>
+            <exception cref="T:System.NotSupportedException"><paramref name="baseType"/> is an interface</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.ReflectionExtensions.IsOverride(System.Reflection.MethodInfo)">
+            <summary>
+            Returns true if given <see cref="T:System.Reflection.MethodInfo"/>'s base definition
+            is not in its declaring type (because the method is an override).
+            </summary>
+            <remarks>
+            Note that implementations of interface methods are not overrides,
+            but implementation of abstract methods are.
+            </remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="methodInfo"/> is null</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.ReflectionExtensions.Cast(System.Collections.IEnumerable,System.Type)">
+            <summary>
+            Casts the elements of an <see cref="T:System.Collections.IEnumerable"/> to the specified type.
+            </summary>
+            <remarks>
+            Has the same quirks with boxed values as the original 
+            <see cref="M:System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)"/>
+            </remarks>
+        </member>
+    </members>
+</doc>
