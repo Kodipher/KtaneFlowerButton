@@ -24,6 +24,18 @@
             <param name="item">The value to prened</param>
             <returns>A new sequence that starts with the prepended element</returns>
         </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions.Zip``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1})">
+            <summary>
+            Produces a sequence of pairs with elements from the two specified sequences.
+            </summary>
+            <typeparam name="TFirst">The type of the elements of the first input sequence</typeparam>
+            <typeparam name="TSecond">The type of the elements of the second input sequence.</typeparam>
+            <param name="first">The first sequence to merge.</param>
+            <param name="second">The second sequence to merge.</param>
+            <returns>
+            An <see cref="T:System.Collections.Generic.IEnumerable`1"/> that contains merged elements of two input sequences
+            </returns>
+        </member>
         <member name="T:Rephidock.GeneralUtilities.Collections.GeneralEnumerableExtensions">
             <summary>
             Provides extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
@@ -594,6 +606,15 @@
             but implementation of abstract methods are.
             </remarks>
             <exception cref="T:System.ArgumentNullException"><paramref name="methodInfo"/> is null</exception>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Reflection.ReflectionExtensions.Cast(System.Collections.IEnumerable,System.Type)">
+            <summary>
+            Casts the elements of an <see cref="T:System.Collections.IEnumerable"/> to the specified type.
+            </summary>
+            <remarks>
+            Has the same quirks with boxed values as the original 
+            <see cref="M:System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)"/>
+            </remarks>
         </member>
     </members>
 </doc>
