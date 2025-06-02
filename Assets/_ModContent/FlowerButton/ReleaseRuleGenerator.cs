@@ -484,17 +484,14 @@ namespace FlowerButtonMod.FlowerButton {
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.One),
 					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
-					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.One),
-					// Hacky weighting
-					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.TwoOrGreater),
-					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.TwoOrGreater)
+					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.One)
 				),
 
 				CommonNodes.IsNot.WithObjects(
 					CommonNodes.Prime.WithAdditionalDigit(),
 					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
-					CommonNodes.Digit2Or8.WithAdditionalDigit(),
-					CommonNodes.Digit4Or6.WithAdditionalDigit()
+					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
+					CommonNodes.Digit4Or6.WithAdditionalDigit(AdditionalDigitReqirement.NotZero)
 				),
 
 				CommonNodes.Is1Away.WithObjects(
@@ -1237,8 +1234,8 @@ namespace FlowerButtonMod.FlowerButton {
 						allPassing = false;
 					}
 
-					if (validReleaseTimes.Max() < 20) {
-						logger.LogStringFormat("ISSUE: {0} has max release time of under 20", currentCombinationLog);
+					if (validReleaseTimes.Where(time => time < 65).Max() < 19) {
+						logger.LogStringFormat("ISSUE: {0} has a max release of under 19 among those under 65", currentCombinationLog);
 						allPassing = false;
 					}
 
