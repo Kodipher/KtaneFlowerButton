@@ -215,6 +215,9 @@ namespace FlowerButtonMod.FlowerButton {
 			timerSapper = new BombTimerSapper(kmModule);
 			distortionManager = new CameraDistortionManager(cameraDistortionEffectMaterialOriginal);
 
+			timerSapper.OnSapError += OnSapError;
+			timerSapper.OnSubtractError += OnPenaltyError;
+
 			// Button
 			var buttonTransform = transform.Find("button");
 			buttonSelectable = buttonTransform.GetComponent<KMSelectable>();
@@ -280,11 +283,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 				// Zen mode: add time instead
 				if (ZenModeActive) penaltyDeltaTime = -penaltyDeltaTime;
-
-				bool couldSubtractTime = timerSapper.SubtractTime(penaltyDeltaTime);
-
-				// Abort penalty if failed to subtract
-				if (!couldSubtractTime) penaltyTimeLeft = TimeSpan.Zero;
+				timerSapper.SubtractTime(penaltyDeltaTime);
 			}
 
 		}
@@ -293,12 +292,8 @@ namespace FlowerButtonMod.FlowerButton {
 
 			// Override bomb's timer display
 			if (state == State.Held || state == State.SolutionCheckAnimation) {
-
-				if (timerOverride == null) return;
-				bool sapped = timerSapper.SapBombTimerForOneFrame(timerOverride.DisplayOverride);
-
-				if (!sapped) OnSapError();
-
+				if (timerDisplayGenerator == null) return;
+				timerSapper.SapBombTimerForAtLeastOneFrame(timerDisplayGenerator.DisplayOverride);
 			};
 
 		}
@@ -321,7 +316,8 @@ namespace FlowerButtonMod.FlowerButton {
 			penaltyTimeLeft = TimeSpan.Zero;
 		}
 
-		void OnSapError() {
+		void OnSapError(System.Exception ex) {
+			logger.LogException(ex);
 			logger.LogString("Could not sap timer display. Triggering failsafe. Module solved.");
 			countdownText.text = CountdownTextError;
 
@@ -331,6 +327,12 @@ namespace FlowerButtonMod.FlowerButton {
 			RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
 			StopMusicBox();
+		}
+
+		void OnPenaltyError(System.Exception ex) {
+			logger.LogException(ex);
+			logger.LogString("Could not deliver penalty. Abolishing penalty.");
+			penaltyTimeLeft = TimeSpan.Zero;
 		}
 
 		#endregion

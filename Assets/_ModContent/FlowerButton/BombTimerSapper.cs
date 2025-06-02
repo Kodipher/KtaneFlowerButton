@@ -1,23 +1,66 @@
 ﻿using UnityEngine;
-using TimeSpan = System.TimeSpan;
+using System;
+using System.Reflection;
+using Rephidock.GeneralUtilities.Collections;
 
 
 namespace FlowerButtonMod.FlowerButton {
 
 	internal class BombTimerSapper {
 
+		const string moddedTimerOverrideName = "_temporaryOverride";
+
+		readonly Lazy<object> bombTimer;
+		readonly Lazy<object> timerDisplayTextMeshPro;
+		readonly Lazy<bool> timerHasModdedOverride;
+
 		public BombTimerSapper(KMBombModule sappingModule) {
-			this.sappingModule = sappingModule;
+
+			bombTimer = new Lazy<object>(
+				() => sappingModule?.GetComponent("BombComponent")?.GetValue<object>("Bomb")?.CallMethod<object>("GetTimer")
+			);
+
+			timerDisplayTextMeshPro = new Lazy<object>(
+				() => bombTimer.Value?.GetValue<object>("text")
+			);
+
+			timerHasModdedOverride = new Lazy<bool>(
+				() => {
+					Type timerType = bombTimer.Value.GetType();
+
+					FieldInfo overrideField = timerType.GetCachedMember<FieldInfo>(moddedTimerOverrideName);
+					if (overrideField != null) return true;
+
+					PropertyInfo overrideProperty = timerType.GetCachedMember<PropertyInfo>(moddedTimerOverrideName);
+					if (overrideField != null) return true;
+
+					return false;
+				}
+			);
 		}
 
-		readonly KMBombModule sappingModule;
+		/// <summary>Called if the timer could not be sapped.</summary>
+		public event Action<Exception> OnSapError = (_) => { };
 
-		// Cache
-		object cachedBombReference = null;
-		object cachedTimerComponentDisplayTextMeshPro = null;
+		/// <summary>Called if the timer could not be subtracted.</summary>
+		public event Action<Exception> OnSubtractError = (_) => { };
 
-		/// <returns>true if could sap the timer</returns>
-		public bool SapBombTimerForOneFrame(string displayOverride) {
+		/// <summary>
+		/// Overrides the bomb timer for
+		/// - 1 frame if the timer is vanilla
+		/// - until clearned with <see langword="null"/> if the timer is modded.
+		/// </summary>
+		/// <param name="displayOverride">The string to override with or null to clear override if modded.</param>
+		public void SapBombTimerForAtLeastOneFrame(string displayOverride) {
+			try {
+				SapBombTimerInternal(displayOverride);
+			} catch (Exception ex) {
+				OnSapError.Invoke(ex);
+			}
+		}
+
+		/// <returns>throws if could not sap the timer</returns>
+		internal void SapBombTimerInternal(string displayOverride) {
 
 			if (Application.isEditor) {
 
@@ -27,34 +70,33 @@ namespace FlowerButtonMod.FlowerButton {
 					.GetComponent<TextMesh>()
 					.text = displayOverride;
 
-				return true;
+				return;
 			};
 
-			// Find the bomb
-			if (cachedBombReference == null) {
-				cachedBombReference = sappingModule
-									   ?.GetComponent("BombComponent")
-									   ?.GetValue<object>("Bomb");
-
-				if (cachedBombReference == null) return false;
+			// Initialize (and cache) lazy values
+			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb timer refernece.");
+			if (timerDisplayTextMeshPro.Value == null) throw new InvalidOperationException("Could not find the bomb timer text refernece.");
+			
+			// Override
+			if (timerHasModdedOverride.Value) {
+				// modded timer, until cleared
+				bombTimer.Value.SetValue(moddedTimerOverrideName, displayOverride);
+			} else {
+				// vanilla timer for 1 frame
+				timerDisplayTextMeshPro.Value.SetValue("text", displayOverride);
 			}
-
-			// Find the timer text
-			if (cachedTimerComponentDisplayTextMeshPro == null) {
-				cachedTimerComponentDisplayTextMeshPro = cachedBombReference
-										?.CallMethod<object>("GetTimer")
-										?.GetValue<object>("text");
-
-				if (cachedTimerComponentDisplayTextMeshPro == null) return false;
-			}
-
-			// Override for 1 frame
-			cachedTimerComponentDisplayTextMeshPro.SetValue("text", displayOverride);
-			return true;
 		}
 
-		/// <returns>true if could subtract time</returns>
-		public bool SubtractTime(TimeSpan time) {
+		public void SubtractTime(TimeSpan time) {
+			try {
+				SubtractTimeInternal(time);
+			} catch (Exception ex) {
+				OnSubtractError.Invoke(ex);
+			}
+		}
+
+		/// <returns>throws if could not sap the timer</returns>
+		internal void SubtractTimeInternal(TimeSpan time) {
 
 			if (Application.isEditor) {
 
@@ -68,27 +110,15 @@ namespace FlowerButtonMod.FlowerButton {
 				testHardnessTimer.TimeRemaining -= (float)time.TotalSeconds;
 				#endif
 
-				return true;
+				return;
 			}
 
-			// Find the bomb
-			if (cachedBombReference == null) {
-				cachedBombReference = sappingModule
-									   ?.GetComponent("BombComponent")
-									   ?.GetValue<object>("Bomb");
+			// Find the bomb timer
+			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb time refernece.");
 
-				if (cachedBombReference == null) return false;
-			}
-
-			// Find the timer
-			object timer = cachedBombReference?.CallMethod<object>("GetTimer");
-			if (timer == null) return false;
-			
 			// Perform additional subtraction
-			float newTime = timer.GetValue<float>("TimeRemaining") - (float)time.TotalSeconds;
-			timer.SetValue("TimeRemaining", newTime);
-
-			return true;
+			float newTime = bombTimer.Value.GetValue<float>("TimeRemaining") - (float)time.TotalSeconds;
+			bombTimer.Value.SetValue("TimeRemaining", newTime);
 		}
 
 	}
