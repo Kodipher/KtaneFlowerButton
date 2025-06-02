@@ -835,7 +835,7 @@ namespace FlowerButtonMod.FlowerButton {
 			logger.LogString("Time ran out.");
 
 			// Set time display to 0
-			timerOverride.OverruleOverride("00:00");
+			timerOverride.DisplayOverride = "00:00";
 
 			// Blink
 			for (int i = 0; i < timeoutBlinksTotal; i++) {

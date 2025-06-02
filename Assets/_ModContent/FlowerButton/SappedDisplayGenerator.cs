@@ -33,16 +33,37 @@ namespace FlowerButtonMod.FlowerButton {
 									preferredDigits.Length
 								)
 								.ToArray();
-
 		}
 
 		#endregion
 
-		#region //// Non-Preferred digit picking
+		#region //// Digit Picking
 
+		/// <summary>
+		/// Queues of non-preferred digits, 
+		/// for each position.
+		/// </summary>
 		Queue<int>[] NonPreferredOrderedBags { get; /*init;*/ }
 
-		public void RefillBag(Queue<int> bag, int? prefferedDigit) {
+		/// <summary>
+		/// Count of non-preferred left to show before showing preferred, 
+		/// for each position.
+		/// </summary>
+		int[] NonPreferredLeft { get; /*init;*/ }
+
+		const int nonPreferredMin = 1;
+		const int nonPreferredMax = 2;
+
+		public int GetNonPreferredDigit(int index) {
+			Queue<int> bag = NonPreferredOrderedBags[index];
+			if (bag.Count == 0) RefillBag(index);
+			return bag.Dequeue();
+		}
+
+		public void RefillBag(int index) {
+
+			Queue<int> bag = NonPreferredOrderedBags[index];
+			int? prefferedDigit = PreferredDigits[index];
 
 			int[] allDigits = Enumerable.Range(0, 10).ToArray().Shuffle(Rng) as int[];
 
@@ -61,22 +82,10 @@ namespace FlowerButtonMod.FlowerButton {
 
 		}
 
-		public int GetNonPreferredDigit(int index) {
-			Queue<int> bag = NonPreferredOrderedBags[index];
-			if (bag.Count == 0) RefillBag(bag, PreferredDigits[index]);
-			return bag.Dequeue();
-		}
-
-		int[] NonPreferredLeft { get; /*init;*/ }
-
-		const int nonPreferredMin = 1;
-		const int nonPreferredMax = 2;
-		
-
 		/// <summary>
 		/// Ticks a display position and gives a digit to display for that tick.
 		/// </summary>
-		int TickDisplayPosition(int index) {
+		int GetNextDigit(int index) {
 
 			if (PreferredDigits[index] == null) {
 				return GetNonPreferredDigit(index);
@@ -95,23 +104,22 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#region //// Display
 
+		/// <summary>Generates a new <see cref="DisplayOverride"/></summary>
 		public void TickDisplay() {
 
 			// Tick all positions
 			int?[] digits = new int?[PreferredDigits.Length];
 
 			for (int i = 0; i < digits.Length; i++) {
-				digits[i] = TickDisplayPosition(i);
+				digits[i] = GetNextDigit(i);
 			}
 
-			// Set disaply
-			SetDisplayToDigits(digits);
-			
+			// Set display
+			DisplayOverride = FormatDisplayFromDigits(digits);
 		}
 
-		public void SetDisplayToDigits(int?[] digits, int nullDigit = -1) {
+		public string FormatDisplayFromDigits(int?[] digits, int nullDigit = -1) {
 
-			// Format
 			var sb = new StringBuilder();
 
 			for (int i = 0; i < digits.Length - 2; i++) {
@@ -124,20 +132,15 @@ namespace FlowerButtonMod.FlowerButton {
 				sb.Append((char)('0' + (digits[i] ?? nullDigit)));
 			}
 
-			// Commit new display
-			DisplayOverride = sb.ToString();
+			return sb.ToString();
 		}
 
 		public void SetDisplayToPreffered(int nullDigit) {
-			SetDisplayToDigits(PreferredDigits, nullDigit);
-		}
-
-		public void OverruleOverride(string display) {
-			DisplayOverride = display;
+			FormatDisplayFromDigits(PreferredDigits, nullDigit);
 		}
 
 		/// <summary>The current sapped display to be used</summary>
-		public string DisplayOverride { get; private set; } = "";
+		public string DisplayOverride { get; set; } = "";
 
 		#endregion
 
