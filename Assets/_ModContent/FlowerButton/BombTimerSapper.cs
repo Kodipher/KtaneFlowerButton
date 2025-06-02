@@ -59,7 +59,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 		}
 
-		/// <returns>throws if could not sap the timer</returns>
+		/// <remarks>throws if could not sap the timer</remarks>
 		internal void SapBombTimerInternal(string displayOverride) {
 
 			if (Application.isEditor) {
@@ -105,7 +105,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 		}
 
-		/// <returns>throws if could not sap the timer</returns>
+		/// <remarks>throws if could not subtract timer</remarks>
 		internal void SubtractTimeInternal(TimeSpan time) {
 
 			if (Application.isEditor) {
