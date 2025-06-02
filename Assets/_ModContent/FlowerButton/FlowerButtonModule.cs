@@ -756,7 +756,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 			// Check solution
 			chosenReleaseTime = GetCountdownDisplayNumber(); // calculation, not display reading
-			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display", chosenReleaseTime);
+			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display.", chosenReleaseTime);
 			bool isCorrect = validReleaseTimes.Contains(chosenReleaseTime);
 
 			if (isCorrect) {
@@ -783,7 +783,7 @@ namespace FlowerButtonMod.FlowerButton {
 				int currentPenaltyBaseLine;
 				CalculateAndSetPenalty(chosenReleaseTime, out currentPenaltyBaseLine);
 
-				logger.LogStringFormat("Penalties start below {0:D2}", currentPenaltyBaseLine);
+				logger.LogStringFormat("Penalties start below {0:D2}.", currentPenaltyBaseLine);
 				if (penaltyTimeLeft > TimeSpan.Zero) {
 					logger.LogStringFormat("Time penalty of {0:F3} seconds will be delivered over time.", penaltyTimeLeft.TotalSeconds);
 				} else {
