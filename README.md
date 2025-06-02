@@ -7,6 +7,5 @@ A modded module for Keep Talking and Nobody Explodes. Based on / reference to Sp
 ### Made using / Powered by
 
 - Community fork of [KTaNE Modkit](https://github.com/Qkrisi/ktanemodkit)
-- ModCondfig and FakeStatusLight community scripts
+- ModConfig and FakeStatusLight community scripts
 - Rephidock.GeneralUtilities and Rephidock.AtomicAnimations
-- 0Harmony
