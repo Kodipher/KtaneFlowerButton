@@ -136,7 +136,7 @@ namespace FlowerButtonMod.FlowerButton {
 		}
 
 		public void SetDisplayToPreffered(int nullDigit) {
-			FormatDisplayFromDigits(PreferredDigits, nullDigit);
+			DisplayOverride = FormatDisplayFromDigits(PreferredDigits, nullDigit);
 		}
 
 		/// <summary>The current sapped display to be used</summary>
