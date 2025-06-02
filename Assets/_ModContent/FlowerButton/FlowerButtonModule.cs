@@ -114,7 +114,7 @@ namespace FlowerButtonMod.FlowerButton {
 		const double penaltyTimeScale = 0.75;
 
 		const int humanReleaseTimeThreshold = 50;
-		const int minPenaltyBaseLine = 30;
+		const int minPenaltyMaxAt = 30;
 		readonly static TimeSpan maxPenaltyTime = TimeSpan.FromSeconds(60);
 
 		public TimeSpan GetPenaltyDeltaTime(float deltaTime) {
@@ -136,28 +136,21 @@ namespace FlowerButtonMod.FlowerButton {
 			return penaltyDeltaTime;
 		}
 
-		public void CalculateAndSetPenalty(int releaseTime, out double minPenaltyAt) {
+		public void CalculateAndSetPenalty(int releaseTime, out int minPenaltyAt) {
 
-			// Find the start of the penalties
-			IEnumerable<int> humanReleaseTimes = validReleaseTimes.Where(time => time <= humanReleaseTimeThreshold);
+			// Find the start of the penalties:
+			// The highest human release time
+			// or 30, whichever is lower.
+			// Penalty is 0 at this time.
+			minPenaltyAt = validReleaseTimes
+							.Where(time => time <= humanReleaseTimeThreshold)
+							.OrderByDescending(t => t)
+							.FirstOrDefault();
 
-			double baseAverage = humanReleaseTimeThreshold / 2f;
-			double caseAverage = humanReleaseTimes.Average();
-			double rangeScale = caseAverage / baseAverage;
-			minPenaltyAt = minPenaltyBaseLine * rangeScale;
-
-			// If for some reason there are so few valid release times
-			// that the defuser has to wait until 01 or 00
-			// Then abolish the penalty
-			if (minPenaltyAt <= 1) {
-				minPenaltyAt = 0;
-				return;
-			}
-
-			if (minPenaltyAt > minPenaltyBaseLine) minPenaltyAt = minPenaltyBaseLine;
+			if (minPenaltyAt > minPenaltyMaxAt) minPenaltyAt = minPenaltyMaxAt;
 
 			// If not in penalty range do nothing
-			if (releaseTime > minPenaltyAt) return;
+			if (releaseTime >= minPenaltyAt) return;
 
 			// Calculate penalty
 			double penaltyProgress = 1 - (releaseTime / minPenaltyAt);
@@ -787,10 +780,10 @@ namespace FlowerButtonMod.FlowerButton {
 
 				// Set penalty
 				// (wont be deducted until time is restored)
-				double currentPenaltyBaseLine;
+				int currentPenaltyBaseLine;
 				CalculateAndSetPenalty(chosenReleaseTime, out currentPenaltyBaseLine);
 
-				logger.LogStringFormat("Penalties start at {0:F2}", currentPenaltyBaseLine);
+				logger.LogStringFormat("Penalties start below {0:D2}", currentPenaltyBaseLine);
 				if (penaltyTimeLeft > TimeSpan.Zero) {
 					logger.LogStringFormat("Time penalty of {0:F3} seconds will be delivered over time.", penaltyTimeLeft.TotalSeconds);
 				} else {
