@@ -153,7 +153,7 @@ namespace FlowerButtonMod.FlowerButton {
 			if (releaseTime >= minPenaltyAt) return;
 
 			// Calculate penalty
-			double penaltyProgress = 1 - (releaseTime / minPenaltyAt);
+			double penaltyProgress = 1 - (releaseTime / (double)minPenaltyAt);
 			penaltyTimeLeft = TimeSpan.FromSeconds(MoreMath.Lerp(0, maxPenaltyTime.TotalSeconds, penaltyProgress));
 		}
 
