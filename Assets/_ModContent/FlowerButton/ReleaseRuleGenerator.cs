@@ -431,7 +431,7 @@ namespace FlowerButtonMod.FlowerButton {
 				BoolOps.AnyTrue,
 
 				CommonNodes.Is.WithObjects(
-					CommonNodes.Digit0.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
+					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.TwoOrGreater),
 					CommonNodes.Prime,
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
 					CommonNodes.UnitsDigit,
@@ -460,7 +460,7 @@ namespace FlowerButtonMod.FlowerButton {
 				),
 
 				CommonNodes.IsLessThan.WithObjects(
-					CommonNodes.AdditionalOnlyTwoOrThree,
+					CommonNodes.AdditionalOnlyThreeThroughSeven,
 					CommonNodes.UnitsDigit
 				),
 
@@ -481,10 +481,12 @@ namespace FlowerButtonMod.FlowerButton {
 				BoolOps.AllTrue,
 
 				CommonNodes.Is.WithObjects(
-					CommonNodes.Digit0,
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.One),
-					CommonNodes.Digit0.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
+					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
+					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.One),
+					// Hacky weighting
+					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.TwoOrGreater),
 					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.TwoOrGreater)
 				),
 
@@ -507,7 +509,7 @@ namespace FlowerButtonMod.FlowerButton {
 				),
 
 				CommonNodes.IsLessThan.WithObjects(
-					CommonNodes.AdditionalOnlyTwoOrThree
+					CommonNodes.AdditionalOnlyThreeThroughSeven
 				),
 
 				CommonNodes.IsGreaterThan.WithObjects(
@@ -875,7 +877,6 @@ namespace FlowerButtonMod.FlowerButton {
 				CommonNodes.BeginsWithWithSubjectWithLeadingZero.WithObjects(
 					CommonNodes.Prime,
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
-					CommonNodes.Digit0.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
 					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.Any),
 					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.One),
 					CommonNodes.UnitsDigit,
@@ -947,7 +948,6 @@ namespace FlowerButtonMod.FlowerButton {
 				CommonNodes.EndsWith.WithObjects(
 					CommonNodes.Prime,
 					CommonNodes.Prime.WithAdditionalDigit(AdditionalDigitReqirement.Zero),
-					CommonNodes.Digit0.WithAdditionalDigit(AdditionalDigitReqirement.NotZero),
 					CommonNodes.Digit1Or7.WithAdditionalDigit(AdditionalDigitReqirement.Any),
 					CommonNodes.Digit2Or8.WithAdditionalDigit(AdditionalDigitReqirement.One),
 					CommonNodes.UnitsDigit,
@@ -1234,6 +1234,11 @@ namespace FlowerButtonMod.FlowerButton {
 
 					if (validReleaseTimes.Min() > 20) {
 						logger.LogStringFormat("ISSUE: {0} has min release time of over 20", currentCombinationLog);
+						allPassing = false;
+					}
+
+					if (validReleaseTimes.Max() < 20) {
+						logger.LogStringFormat("ISSUE: {0} has max release time of under 20", currentCombinationLog);
 						allPassing = false;
 					}
 
