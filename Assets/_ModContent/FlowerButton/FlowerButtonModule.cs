@@ -43,7 +43,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		// Stuff for solution
 		int[] validReleaseTimes = null;
-		internal SappedDisplayGenerator timerOverride = null;
+		internal SappedDisplayGenerator timerDisplayGenerator = null; // Contains preffered digits
 		int chosenReleaseTime = -1;
 
 		#endregion
@@ -83,7 +83,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 			// Tick
 			if (ticksLeft != ticksLeftPrevious) {
-				timerOverride?.TickDisplay();
+				timerDisplayGenerator?.TickDisplay();
 			}
 			
 			// Display
@@ -172,14 +172,14 @@ namespace FlowerButtonMod.FlowerButton {
 		public FakeStatusLight fakeStausLightOriginal;
 		public Material cameraDistortionEffectMaterialOriginal;
 
-		// Created 
+		// Found or Created
 		internal System.Random rng;
 
 		internal KMBombModule kmModule;
 		internal KMBombInfo kmBomb;
 		internal KMAudio kmAudio;
 
-		internal FakeStatusLight fakeStatusLight;
+		internal FakeStatusLight statusLightProxy;
 
 		internal BombTimerSapper timerSapper;
 		internal CameraDistortionManager distortionManager;
@@ -207,9 +207,9 @@ namespace FlowerButtonMod.FlowerButton {
 			kmModule.OnActivate += OnActivate;
 
 			// Fake stauts light
-			fakeStatusLight = Instantiate(fakeStausLightOriginal, transform);
-			fakeStatusLight.GetStatusLights(transform);
-			fakeStatusLight.Module = kmModule;
+			statusLightProxy = Instantiate(fakeStausLightOriginal, transform);
+			statusLightProxy.GetStatusLights(transform);
+			statusLightProxy.Module = kmModule;
 
 			// Parts
 			timerSapper = new BombTimerSapper(kmModule);
@@ -322,7 +322,7 @@ namespace FlowerButtonMod.FlowerButton {
 			countdownText.text = CountdownTextError;
 
 			state = State.Solved;
-			fakeStatusLight.HandlePass();
+			statusLightProxy.HandlePass();
 
 			RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
@@ -398,7 +398,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Generate the rule
 			int?[] preferredDigits;
 			ReleaseRuleGenerator.GenerateReleaseRule(rng, out preferredDigits, out validReleaseTimes);
-			timerOverride = new SappedDisplayGenerator(preferredDigits, rng);
+			timerDisplayGenerator = new SappedDisplayGenerator(preferredDigits, rng);
 
 			logger.LogStringFormat(
 				"Preferred digits: " +
@@ -414,7 +414,7 @@ namespace FlowerButtonMod.FlowerButton {
 			musicBoxTimeLeft = TimeSpan.FromSeconds(musicBoxTotalNotes + 1);
 
 			// "Solve" the module
-			fakeStatusLight.SetPass();
+			statusLightProxy.SetPass();
 
 			// Wind-up
 			state = State.WindingUp;
@@ -502,10 +502,10 @@ namespace FlowerButtonMod.FlowerButton {
 
 			System.Action helper_ResetToPreHold = () => {
 				state = State.ReadyForHold;
-				timerOverride = null;
+				timerDisplayGenerator = null;
 				validReleaseTimes = null;
 
-				fakeStatusLight.SetInActive();
+				statusLightProxy.SetInActive();
 				countdownText.text = CountdownTextAwaitingHold;
 
 				StopMusicBox();
@@ -514,7 +514,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Disabled forced detonation: reset
 			if (settings.disableForcedDetonation) {
 				logger.LogString("Forced detonation disabled. Striking once and resetting.");
-				fakeStatusLight.HandleStrike();
+				statusLightProxy.HandleStrike();
 				buttonSelectable.AddInteractionPunch(strikePunch);
 
 				// Hide display
@@ -531,7 +531,7 @@ namespace FlowerButtonMod.FlowerButton {
 			logger.LogString("Goodbye.");
 
 			for (int i = 0; i < ZenModeStrikeCount; i++) {
-				fakeStatusLight.HandleStrike();
+				statusLightProxy.HandleStrike();
 				buttonSelectable.AddInteractionPunch(strikePunch);
 				countdownText.text = validReleaseTimes.PickRandom(rng).ToString("D2");
 				yield return CoroutineYield.Sleep(infiniteStrikeDelta);
@@ -550,7 +550,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 
 			do {
-				fakeStatusLight.HandleStrike();
+				statusLightProxy.HandleStrike();
 				buttonSelectable.AddInteractionPunch(strikePunch);
 				countdownText.text = validReleaseTimes.PickRandom(rng).ToString("D2");
 				yield return CoroutineYield.Sleep(infiniteStrikeDelta);
@@ -612,7 +612,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 
 			// Init first display override
-			timerOverride.TickDisplay();
+			timerDisplayGenerator.TickDisplay();
 
 			// Begin countdown
 			countdownText.text = GetCountdownDisplayNumber().ToString("D2");
@@ -715,7 +715,7 @@ namespace FlowerButtonMod.FlowerButton {
 				solutionCheckTickTimestamps.Select(
 					ts => {
 						// Change digits
-						timerOverride?.TickDisplay();
+						timerDisplayGenerator?.TickDisplay();
 						countdownText.text = rng.Next(100).ToString("D2");
 						return new CoroutineYield() { WaitUntil = ts };
 					}
@@ -740,7 +740,7 @@ namespace FlowerButtonMod.FlowerButton {
 			yield return new CoroutineYield() { WaitUntil = solutionCheckStatusLightOffTimestamp };
 
 			// Third distrotion + Turn off stauts light
-			fakeStatusLight.SetInActive();
+			statusLightProxy.SetInActive();
 
 			yield return new Shift1D(
 				solutionCheckDistortionBoostTimes[2],
@@ -769,7 +769,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 				// Solve
 				logger.LogString("Release time is valid.");
-				fakeStatusLight.SetPass();
+				statusLightProxy.SetPass();
 				countdownText.text = CountdownTextSolved;
 
 				// Set time to prefered digits
@@ -777,10 +777,10 @@ namespace FlowerButtonMod.FlowerButton {
 				TimeSpan nullTickDuration = TimeSpan.FromTicks(showPreferredDigitsDuration.Ticks / solutionCheckPreferredDigitsNullTicks);
 				
 				for (int i = 0; i < solutionCheckPreferredDigitsNullTicks - 1; i++) {
-					timerOverride.SetDisplayToPreffered(rng.Next(10));
+					timerDisplayGenerator.SetDisplayToPreffered(rng.Next(10));
 					yield return CoroutineYield.Sleep(nullTickDuration);
 				}
-				timerOverride.SetDisplayToPreffered(rng.Next(10));
+				timerDisplayGenerator.SetDisplayToPreffered(rng.Next(10));
 
 				yield return new CoroutineYield() { WaitUntil = solutionCheckRestoreTimeTimestamp };
 
@@ -821,7 +821,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Set solve state
 			if (isCorrect) {
 				state = State.Solved;
-				fakeStatusLight.HandlePass();
+				statusLightProxy.HandlePass();
 				logger.LogString("Solved!");
 			}
 
@@ -835,7 +835,7 @@ namespace FlowerButtonMod.FlowerButton {
 			logger.LogString("Time ran out.");
 
 			// Set time display to 0
-			timerOverride.DisplayOverride = "00:00";
+			timerDisplayGenerator.DisplayOverride = "00:00";
 
 			// Blink
 			for (int i = 0; i < timeoutBlinksTotal; i++) {
@@ -848,7 +848,7 @@ namespace FlowerButtonMod.FlowerButton {
 			yield return CoroutineYield.Sleep(timeoutBlinkFlipDelta);
 
 			// Reset status light and time flow
-			fakeStatusLight.SetInActive();
+			statusLightProxy.SetInActive();
 			RestoreTime();
 
 			// Start striking
