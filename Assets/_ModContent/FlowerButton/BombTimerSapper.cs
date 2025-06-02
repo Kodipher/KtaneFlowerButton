@@ -48,10 +48,10 @@ namespace FlowerButtonMod.FlowerButton {
 		/// <summary>
 		/// Overrides the bomb timer for
 		/// - 1 frame if the timer is vanilla
-		/// - until clearned with <see langword="null"/> if the timer is modded.
+		/// - until clearned with <see cref="UnsapBombTimer"/> if the timer is modded.
 		/// </summary>
-		/// <param name="displayOverride">The string to override with or null to clear override if modded.</param>
-		public void SapBombTimerForAtLeastOneFrame(string displayOverride) {
+		/// <param name="displayOverride">The string to override with</param>
+		public void SapBombTimer(string displayOverride) {
 			try {
 				SapBombTimerInternal(displayOverride);
 			} catch (Exception ex) {
@@ -85,6 +85,16 @@ namespace FlowerButtonMod.FlowerButton {
 				// vanilla timer for 1 frame
 				timerDisplayTextMeshPro.Value.SetValue("text", displayOverride);
 			}
+		}
+
+		public void UnsapBombTimer() {
+
+			// Only for Bomb Timer Modifier
+			// as test hardness and vanilla timers override text every frame
+			if (Application.isEditor || !timerHasModdedOverride.Value) return;
+
+			bombTimer.Value.SetValue(moddedTimerOverrideName, null);
+			bombTimer.Value.SetValue("_lastTimeKey", -1); // Forces the timer to update
 		}
 
 		public void SubtractTime(TimeSpan time) {

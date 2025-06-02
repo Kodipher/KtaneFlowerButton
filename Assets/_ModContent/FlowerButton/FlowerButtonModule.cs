@@ -293,8 +293,8 @@ namespace FlowerButtonMod.FlowerButton {
 			// Override bomb's timer display
 			if (state == State.Held || state == State.SolutionCheckAnimation) {
 				if (timerDisplayGenerator == null) return;
-				timerSapper.SapBombTimerForAtLeastOneFrame(timerDisplayGenerator.DisplayOverride);
-			};
+				timerSapper.SapBombTimer(timerDisplayGenerator.DisplayOverride);
+			}
 
 		}
 
@@ -327,6 +327,7 @@ namespace FlowerButtonMod.FlowerButton {
 			RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
 			StopMusicBox();
+			timerSapper.UnsapBombTimer();
 		}
 
 		void OnPenaltyError(System.Exception ex) {
@@ -796,22 +797,23 @@ namespace FlowerButtonMod.FlowerButton {
 					logger.LogString("No time penalty will be delivered.");
 				}
 
-				// Change state to stop sapping timer
+				// Change state (to/and) stop sapping timer
 				state = State.SolvedRestoringTime;
+				timerSapper.UnsapBombTimer();
 
 			} else {
 				
 				// Incorrect
 				logger.LogString("Release time is invalid.");
-				state = State.Striking;
 				releaseSoundRef.StopSound();
 
 				countdownText.text = chosenReleaseTime.ToString("D2");
 				kmAudio.PlaySoundAtTransform(SoundCatalogue.VoOopsLaughter, transform);
 				yield return CoroutineYield.Sleep(solutionCheckOopsDuration);
 
+				state = State.Striking;
+				timerSapper.UnsapBombTimer();
 				animationRunner.Run(InfiniteStrikingRoutine().ToAnimation());
-
 			}
 
 			// Restore time, remove distorion
