@@ -46,21 +46,28 @@ namespace FlowerButtonMod.Utils {
 		/// </param>
 		public ModuleLogger(string displayName, int? moduleInstanceIndex) {
 
-			// Number-less tag
-			if (!moduleInstanceIndex.HasValue) {
-				tag = CreateLogTagNumberless(displayName);
-				return;
-			}
+			// Create tag
+			tagId = moduleInstanceIndex;
 
-			// Create log tag
-			tag = CreateLogTag(displayName, moduleInstanceIndex.Value);
+			if (moduleInstanceIndex.HasValue) {
+				tag = CreateLogTag(displayName, moduleInstanceIndex.Value);
+			} else {
+				tag = CreateLogTagNumberless(displayName);
+			}
 
 			// Autoprint something
 			#if MODULELOGGER_AUTOPRINT_HELLOWORLD
 			LogString("Notice me, Logfile Analyzer!");
 			LogLine();
 			#endif
+
 		}
+
+		/// <summary>
+		/// The numeric id used in the <see cref="tag"/> 
+		/// or <see langword="null"/> for no numeric id.
+		/// </summary>
+		public readonly int? tagId;
 
 		/// <summary>Log tag that is used to identify the module in the logfile.</summary>
 		readonly string tag;
