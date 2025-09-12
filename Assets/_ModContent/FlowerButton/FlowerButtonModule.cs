@@ -46,8 +46,24 @@ namespace FlowerButtonMod.FlowerButton {
 
 		// Stuff for solution
 		int[] validReleaseTimes = null;
-		internal SappedDisplayGenerator timerDisplayGenerator = null; // Contains preffered digits
-		int chosenReleaseTime = -1;
+		internal SappedDisplayGenerator timerDisplayGenerator = null; // Contains preferred digits
+
+		#endregion
+
+		#region /// Potential Souvenir Data
+
+		/// <summary>
+		/// The time on the module countdown display 
+		/// when the button was released.
+		/// </summary>
+		public int ChosenReleaseTime { get; private set; } = -1;
+
+		/// <summary>
+		/// The preferred digits in reading order.
+		/// Always has a length of 4.
+		/// If the last position has no preferred digit, it is represtended as null.
+		/// </summary>
+		public int?[] PreferredDigits => timerDisplayGenerator.PreferredDigits.ToArray();
 
 		#endregion
 
@@ -240,7 +256,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Events
+		#region //// Module and Game Events
 
 		void Start() {
 
@@ -725,9 +741,9 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 
 			// Check solution
-			chosenReleaseTime = GetCountdownDisplayNumber(); // calculation, not display reading
-			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display.", chosenReleaseTime);
-			bool isCorrect = validReleaseTimes.Contains(chosenReleaseTime);
+			ChosenReleaseTime = GetCountdownDisplayNumber(); // calculation, not display reading
+			logger.LogStringFormat("Button was released with {0:D2} on the module's countdown display.", ChosenReleaseTime);
+			bool isCorrect = validReleaseTimes.Contains(ChosenReleaseTime);
 
 			if (isCorrect) {
 
@@ -751,7 +767,7 @@ namespace FlowerButtonMod.FlowerButton {
 				// Set penalty
 				// (wont be deducted until time is restored)
 				int currentPenaltyBaseLine;
-				CalculateAndSetPenalty(chosenReleaseTime, out currentPenaltyBaseLine);
+				CalculateAndSetPenalty(ChosenReleaseTime, out currentPenaltyBaseLine);
 
 				logger.LogStringFormat("Penalties start below {0:D2}.", currentPenaltyBaseLine);
 				if (penaltyTimeLeft > TimeSpan.Zero) {
@@ -770,7 +786,7 @@ namespace FlowerButtonMod.FlowerButton {
 				logger.LogString("Release time is invalid.");
 				releaseSoundRef.StopSound();
 
-				countdownText.text = chosenReleaseTime.ToString("D2");
+				countdownText.text = ChosenReleaseTime.ToString("D2");
 				kmAudio.PlaySoundAtTransform(SoundCatalogue.VoOopsLaughter, transform);
 				yield return CoroutineYield.Sleep(solutionCheckOopsDuration);
 

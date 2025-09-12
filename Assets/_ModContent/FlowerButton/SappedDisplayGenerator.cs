@@ -14,7 +14,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		System.Random Rng { get; /*init;*/ }
 
-		public int?[] PreferredDigits { get; /*init;*/ }
+		public int?[] PreferredDigits { get; /*private init;*/ }
 
 		/// <param name="preferredDigits">Array of preferred digits (or null for no preference), highest digit first.</param>
 		public SappedDisplayGenerator(int?[] preferredDigits, System.Random rng) {
