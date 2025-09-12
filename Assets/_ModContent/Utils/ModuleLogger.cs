@@ -125,7 +125,7 @@ namespace FlowerButtonMod.Utils {
 
 		#endregion
 
-		#region //// Settings, Logging
+		#region //// Logging
 
 		const char lineChar = '═';
 		const int lineLength = 15;
@@ -143,7 +143,7 @@ namespace FlowerButtonMod.Utils {
 		}
 
 		public void LogException(System.Exception ex) {
-			Debug.LogWarning($"{tag} An exception has occured. See below.");
+			Debug.LogWarning($"{tag} An exception has occured. See in Filtered Log.");
 			Debug.LogException(ex);
 		}
 
