@@ -271,7 +271,7 @@ namespace FlowerButtonMod.FlowerButton {
 			if (state == State.Held) UpdateModuleCountdown(Time.unscaledDeltaTime);
 
 			// Deliver penalty
-			if (penaltyTimeLeft > TimeSpan.Zero && !isAnyButtonMaupulatingTime) {
+			if (penaltyTimeLeft > TimeSpan.Zero && !TimeManipulator.IsAnyButtonMaupulatingTime) {
 				TimeSpan penaltyDeltaTime = GetPenaltyDeltaTime(Time.deltaTime);
 
 				// Zen mode: add time instead
@@ -294,13 +294,13 @@ namespace FlowerButtonMod.FlowerButton {
 		void OnDestroy() {
 			animationRunner?.Dispose();
 			distortionManager.RemoveDistortionFromCamera();
-			RestoreTime();
+			TimeManipulator.RestoreTime();
 			StopMusicBox();
 		}
 
 		void OnBombExploded() {
 			distortionManager.RemoveDistortionFromCamera();
-			RestoreTime();
+			TimeManipulator.RestoreTime();
 			StopMusicBox();
 			penaltyTimeLeft = TimeSpan.Zero;
 		}
@@ -317,7 +317,7 @@ namespace FlowerButtonMod.FlowerButton {
 			state = State.Solved;
 			statusLightProxy.HandlePass();
 
-			RestoreTime();
+			TimeManipulator.RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
 			StopMusicBox();
 			timerSapper.UnsapBombTimer();
@@ -381,7 +381,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Begin hold
 			logger.LogString("Holding the button...");
 			
-			if (!TrySlowTime()) {
+			if (!TimeManipulator.TrySlowTime()) {
 				logger.LogString("Another flower button is already held. Ignoring hold logic. Please hold this button later.");
 				return;
 			}
@@ -447,39 +447,6 @@ namespace FlowerButtonMod.FlowerButton {
 			state = State.SolutionCheckAnimation;
 			animationRunner.Run(SolutionCheckRoutine().ToAnimation());
 
-		}
-
-		#endregion
-
-		#region //// Time manipulation
-
-		// Prevent multiple buttons from being held
-		private static readonly object gameTimeManipulationLock = new object();
-		private static bool isAnyButtonMaupulatingTime = false;
-
-		const float slowedTimeScale = 0.001f;
-
-		/// <returns>true on success, false if time is manipulated by some other button.</returns>
-		bool TrySlowTime() {
-
-			// Check if allowed to maniulate time
-			lock (gameTimeManipulationLock) {
-				if (isAnyButtonMaupulatingTime) return false;
-
-				isAnyButtonMaupulatingTime = true;
-			}
-
-			Time.timeScale = slowedTimeScale;
-
-			return true;
-		}
-
-		void RestoreTime() {
-			lock (gameTimeManipulationLock) {
-				if (!isAnyButtonMaupulatingTime) return;
-				isAnyButtonMaupulatingTime = false;
-				Time.timeScale = 1f;
-			}
 		}
 
 		#endregion
@@ -810,7 +777,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 
 			// Restore time, remove distorion
-			RestoreTime();
+			TimeManipulator.RestoreTime();
 			foreach (var @yield in EndDistortionRoutine()) yield return @yield;
 
 			// Set solve state
@@ -844,7 +811,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 			// Reset status light and time flow
 			statusLightProxy.SetInActive();
-			RestoreTime();
+			TimeManipulator.RestoreTime();
 
 			// Start striking
 			state = State.Striking;
