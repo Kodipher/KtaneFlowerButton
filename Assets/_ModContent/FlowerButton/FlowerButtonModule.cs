@@ -41,6 +41,9 @@ namespace FlowerButtonMod.FlowerButton {
 		public bool TimeModeActive;
 		public bool ZenModeActive;
 
+		// Expose log id for LFA at module instance (required by Tweaks)
+		public int LogFileAnalyzerId => this.logger.tagId.Value;
+
 		// Stuff for solution
 		int[] validReleaseTimes = null;
 		internal SappedDisplayGenerator timerDisplayGenerator = null; // Contains preffered digits
