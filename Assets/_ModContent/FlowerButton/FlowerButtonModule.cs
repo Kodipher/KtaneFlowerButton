@@ -61,7 +61,7 @@ namespace FlowerButtonMod.FlowerButton {
 		/// <summary>
 		/// The preferred digits in reading order.
 		/// Always has a length of 4.
-		/// If the last position has no preferred digit, it is represtended as null.
+		/// No preferred digit is represtended as null.
 		/// </summary>
 		public int?[] PreferredDigits => timerDisplayGenerator.PreferredDigits.ToArray();
 
