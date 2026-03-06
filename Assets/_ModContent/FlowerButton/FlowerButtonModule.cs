@@ -61,7 +61,7 @@ namespace FlowerButtonMod.FlowerButton {
 		/// <summary>
 		/// The preferred digits in reading order.
 		/// Always has a length of 4.
-		/// No preferred digit is represtended as null.
+		/// No preferred digit is represented as null.
 		/// </summary>
 		public int?[] PreferredDigits => timerDisplayGenerator.PreferredDigits.ToArray();
 
@@ -218,7 +218,7 @@ namespace FlowerButtonMod.FlowerButton {
 			kmBomb.OnBombSolved += OnBombSolved;
 			kmModule.OnActivate += OnActivate;
 
-			// Fake stauts light
+			// Fake status light
 			statusLightProxy = Instantiate(fakeStausLightOriginal, transform);
 			statusLightProxy.GetStatusLights(transform);
 			statusLightProxy.Module = kmModule;
@@ -280,7 +280,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		void Update() {
 
-			// Update animations (independant of time scale)
+			// Update animations (independent of timescale)
 			animationRunner?.Update(TimeSpan.FromSeconds(Time.unscaledDeltaTime));
 
 			// Update shader
@@ -357,7 +357,7 @@ namespace FlowerButtonMod.FlowerButton {
 		const float buttonFlowerOffsetYWhenHeld = -0.1f;
 		readonly static TimeSpan buttonFlowerTravelTime = TimeSpan.FromSeconds(0.075);
 
-		Shift1D CreateButtonPressMovemnet() {
+		Shift1D CreateButtonPressMovement() {
 			return new Shift1D(
 					buttonFlowerOffsetYWhenHeld,
 					buttonFlowerTravelTime,
@@ -370,7 +370,7 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 		}
 
-		Shift1D CreateButtonReleaseMovemnet() {
+		Shift1D CreateButtonReleaseMovement() {
 			return new Shift1D(
 					-buttonFlowerOffsetYWhenHeld,
 					buttonFlowerTravelTime,
@@ -392,7 +392,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Cue
 			//buttonSelectable.AddInteractionPunch(0.5f);
 			kmAudio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonPress, buttonFlowerTransform);
-			animationRunner.Run(CreateButtonPressMovemnet());
+			animationRunner.Run(CreateButtonPressMovement());
 
 			// Logic Guard
 			if (state != State.ReadyForHold) return;
@@ -444,7 +444,7 @@ namespace FlowerButtonMod.FlowerButton {
 			// Cue
 			//buttonSelectable.AddInteractionPunch(0.5f);
 			kmAudio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, buttonFlowerTransform);
-			animationRunner.Run(CreateButtonReleaseMovemnet());
+			animationRunner.Run(CreateButtonReleaseMovement());
 
 			// Released on windup
 			if (state == State.WindingUp) {
@@ -501,8 +501,8 @@ namespace FlowerButtonMod.FlowerButton {
 				countdownText.text = CountdownTextAwaitingLights;
 
 				// Wait for distortion and strike to go away before resetting
-				yield return CoroutineYield.Sleep(distortionDisapperanceDuration);
-				yield return CoroutineYield.Sleep(strikeFlashDurationTime - distortionDisapperanceDuration);
+				yield return CoroutineYield.Sleep(distortionDisappearanceDuration);
+				yield return CoroutineYield.Sleep(strikeFlashDurationTime - distortionDisappearanceDuration);
 				helper_ResetToPreHold();
 				yield break;
 			}
@@ -541,8 +541,8 @@ namespace FlowerButtonMod.FlowerButton {
 		readonly static EasingCurve windUpCountdownWindEasing = Easing.CubicOut;
 		readonly static TimeSpan windUpPostWindUpWait = TimeSpan.FromSeconds(0.75);
 
-		readonly static TimeSpan windUpDistortionApperanceDuration = TimeSpan.FromSeconds(0.5);
-		readonly static EasingCurve windUpDistortionApperanceEasing = Easing.QuadOut;
+		readonly static TimeSpan windUpDistortionAppearanceDuration = TimeSpan.FromSeconds(0.5);
+		readonly static EasingCurve windUpDistortionAppearanceEasing = Easing.QuadOut;
 
 		/// <summary>Coroutine: Winds up the timer, starts music box, sets state.</summary>
 		IEnumerable<CoroutineYield> CountdownWindUpRoutine() {
@@ -552,14 +552,14 @@ namespace FlowerButtonMod.FlowerButton {
 				distortionManager.AddDistortionToCamera();
 				yield return new Move1D(
 					0, distortionManager.DefaltMaxDistortionStrengthX,
-					windUpDistortionApperanceDuration,
-					windUpDistortionApperanceEasing,
+					windUpDistortionAppearanceDuration,
+					windUpDistortionAppearanceEasing,
 					distortionManager.SetDistortionStrengthX
 				);
 				yield return new Move1D(
 					0, distortionManager.DefaltMaxTintStrength,
-					windUpDistortionApperanceDuration,
-					windUpDistortionApperanceEasing,
+					windUpDistortionAppearanceDuration,
+					windUpDistortionAppearanceEasing,
 					distortionManager.SetTintStrength
 				);
 			}
@@ -599,23 +599,23 @@ namespace FlowerButtonMod.FlowerButton {
 			state = State.Held;
 		}
 
-		readonly static TimeSpan distortionDisapperanceDuration = TimeSpan.FromSeconds(0.25);
-		readonly static EasingCurve distortionDisapperanceEasing = Easing.QuadInOut;
+		readonly static TimeSpan distortionDisappearanceDuration = TimeSpan.FromSeconds(0.25);
+		readonly static EasingCurve distortionDisappearanceEasing = Easing.QuadInOut;
 
 		IEnumerable<CoroutineYield> EndDistortionRoutine() {
 			yield return new Move1D(
 				distortionManager.DefaltMaxDistortionStrengthX, 0,
-				distortionDisapperanceDuration,
-				distortionDisapperanceEasing,
+				distortionDisappearanceDuration,
+				distortionDisappearanceEasing,
 				distortionManager.SetDistortionStrengthX
 			);
 			yield return new Move1D(
 				distortionManager.DefaltMaxTintStrength, 0,
-				distortionDisapperanceDuration,
-				distortionDisapperanceEasing,
+				distortionDisappearanceDuration,
+				distortionDisappearanceEasing,
 				distortionManager.SetTintStrength
 			);
-			yield return CoroutineYield.Sleep(distortionDisapperanceDuration);
+			yield return CoroutineYield.Sleep(distortionDisappearanceDuration);
 			distortionManager.RemoveDistortionFromCamera();
 		}
 
@@ -691,7 +691,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 			// Suspense ticks
 			yield return
-				// Ticks in a seprate routine
+				// Ticks in a separate routine
 				solutionCheckTickTimestamps.Select(
 					ts => {
 						// Change digits
@@ -710,7 +710,7 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 			yield return new CoroutineYield() { WaitUntil = solutionCheckSecondDistortionTimestamp };
 
-			// Second distorton boost
+			// Second distortion boost
 			yield return new Shift1D(
 				solutionCheckDistortionBoostTimes[1],
 				solutionCheckDistortionBoostDurations[1],
@@ -719,7 +719,7 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 			yield return new CoroutineYield() { WaitUntil = solutionCheckStatusLightOffTimestamp };
 
-			// Third distrotion + Turn off stauts light
+			// Third distortion + Turn off status light
 			statusLightProxy.SetInActive();
 
 			yield return new Shift1D(
@@ -752,7 +752,7 @@ namespace FlowerButtonMod.FlowerButton {
 				statusLightProxy.SetPass();
 				countdownText.text = CountdownTextSolved;
 
-				// Set time to prefered digits
+				// Set time to preferred digits
 				TimeSpan showPreferredDigitsDuration = solutionCheckRestoreTimeTimestamp - solutionCheckSuspenseEndTimestamp;
 				TimeSpan nullTickDuration = TimeSpan.FromTicks(showPreferredDigitsDuration.Ticks / solutionCheckPreferredDigitsNullTicks);
 				
@@ -765,7 +765,7 @@ namespace FlowerButtonMod.FlowerButton {
 				yield return new CoroutineYield() { WaitUntil = solutionCheckRestoreTimeTimestamp };
 
 				// Set penalty
-				// (wont be deducted until time is restored)
+				// (won't be deducted until time is restored)
 				int currentPenaltyBaseLine;
 				CalculateAndSetPenalty(ChosenReleaseTime, out currentPenaltyBaseLine);
 
@@ -795,7 +795,7 @@ namespace FlowerButtonMod.FlowerButton {
 				animationRunner.Run(InfiniteStrikingRoutine().ToAnimation());
 			}
 
-			// Restore time, remove distorion
+			// Restore time, remove distortion
 			TimeManipulator.RestoreTime();
 			foreach (var @yield in EndDistortionRoutine()) yield return @yield;
 
