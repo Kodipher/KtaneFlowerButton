@@ -329,13 +329,9 @@ namespace FlowerButtonMod.FlowerButton {
 		}
 
 		public void TwitchHandleForcedSolve() {
-			logger.LogString("Forced solve command received.");
-			animationRunner.Clear();
-			
-			countdownText.text = CountdownTextError;
+			logger.LogString("Forced solve command received. Ending routines.");
 
-			state = State.Solved;
-			statusLightProxy.HandlePass();
+			animationRunner.Clear();
 			statusLightProxy.StopAllCoroutines();
 
 			TimeManipulator.RestoreTime();
@@ -343,6 +339,11 @@ namespace FlowerButtonMod.FlowerButton {
 			StopMusicBox();
 			timerSapper.UnsapBombTimer();
 			penaltyTimeLeft = TimeSpan.Zero;
+			
+			state = State.Solved;
+			countdownText.text = CountdownTextSolved;
+			statusLightProxy.HandlePass();
+			logger.LogString("Module solved.");
 		}
 
 		void OnSapError(System.Exception ex) {
