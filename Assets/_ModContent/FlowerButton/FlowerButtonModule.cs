@@ -336,6 +336,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 			state = State.Solved;
 			statusLightProxy.HandlePass();
+			statusLightProxy.StopAllCoroutines();
 
 			TimeManipulator.RestoreTime();
 			distortionManager.RemoveDistortionFromCamera();
