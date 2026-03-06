@@ -328,6 +328,22 @@ namespace FlowerButtonMod.FlowerButton {
 			penaltyTimeLeft = TimeSpan.Zero;
 		}
 
+		public void TwitchHandleForcedSolve() {
+			logger.LogString("Forced solve command received.");
+			animationRunner.Clear();
+			
+			countdownText.text = CountdownTextError;
+
+			state = State.Solved;
+			statusLightProxy.HandlePass();
+
+			TimeManipulator.RestoreTime();
+			distortionManager.RemoveDistortionFromCamera();
+			StopMusicBox();
+			timerSapper.UnsapBombTimer();
+			penaltyTimeLeft = TimeSpan.Zero;
+		}
+
 		void OnSapError(System.Exception ex) {
 			logger.LogException(ex);
 			logger.LogString("Could not sap timer display. Triggering failsafe. Module solved.");
