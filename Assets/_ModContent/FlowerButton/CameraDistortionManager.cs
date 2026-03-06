@@ -12,20 +12,20 @@ namespace FlowerButtonMod.FlowerButton {
 		}
 
 		readonly Material distortionMaterialTemplate;
-		CameraEffect curentCameraEffect;
+		CameraEffect currentCameraEffect;
 
 		public void AddDistortionToCamera() {
-			if (curentCameraEffect != null) RemoveDistortionFromCamera();
+			if (currentCameraEffect != null) RemoveDistortionFromCamera();
 
 			// Add and setup effect component
-			curentCameraEffect = Camera.main.gameObject.AddComponent<CameraEffect>();
-			curentCameraEffect.material = new Material(distortionMaterialTemplate);
+			currentCameraEffect = Camera.main.gameObject.AddComponent<CameraEffect>();
+			currentCameraEffect.material = new Material(distortionMaterialTemplate);
 		}
 
 		public void RemoveDistortionFromCamera() {
-			if (curentCameraEffect == null) return;
-			Object.Destroy(curentCameraEffect);
-			curentCameraEffect = null;
+			if (currentCameraEffect == null) return;
+			Object.Destroy(currentCameraEffect);
+			currentCameraEffect = null;
 		}
 
 		#endregion
@@ -33,37 +33,37 @@ namespace FlowerButtonMod.FlowerButton {
 		#region //// Distortion params
 
 		public void AddTime(float time) {
-			if (curentCameraEffect == null) return;
+			if (currentCameraEffect == null) return;
 
-			float previous = curentCameraEffect.material.GetFloat("_DistortionTime");
-			curentCameraEffect.material.SetFloat("_DistortionTime", previous + time);
+			float previous = currentCameraEffect.material.GetFloat("_DistortionTime");
+			currentCameraEffect.material.SetFloat("_DistortionTime", previous + time);
 
-			previous = curentCameraEffect.material.GetFloat("_TintTime");
-			curentCameraEffect.material.SetFloat("_TintTime", previous + time);
+			previous = currentCameraEffect.material.GetFloat("_TintTime");
+			currentCameraEffect.material.SetFloat("_TintTime", previous + time);
 		}
 
 		public void AddDistortionTime(float time) {
-			if (curentCameraEffect == null) return;
+			if (currentCameraEffect == null) return;
 
-			float previous = curentCameraEffect.material.GetFloat("_DistortionTime");
-			curentCameraEffect.material.SetFloat("_DistortionTime", previous + time);
+			float previous = currentCameraEffect.material.GetFloat("_DistortionTime");
+			currentCameraEffect.material.SetFloat("_DistortionTime", previous + time);
 		}
 
-		/// <param name="stregnthUniform">In range of 0..1</param>
-		public void SetTintStrength(float stregnthUniform) {
-			if (curentCameraEffect == null) return;
-			curentCameraEffect.material.SetFloat("_TintStrength", stregnthUniform);
+		/// <param name="strengthUniform">In range of 0..1</param>
+		public void SetTintStrength(float strengthUniform) {
+			if (currentCameraEffect == null) return;
+			currentCameraEffect.material.SetFloat("_TintStrength", strengthUniform);
 		}
 
-		/// <param name="stregnthUv">In uv space</param>
-		public void SetDistortionStrengthX(float stregnthUv) {
-			if (curentCameraEffect == null) return;
-			curentCameraEffect.material.SetFloat("_DistortionStrengthX", stregnthUv);
+		/// <param name="strengthUv">In uv space</param>
+		public void SetDistortionStrengthX(float strengthUv) {
+			if (currentCameraEffect == null) return;
+			currentCameraEffect.material.SetFloat("_DistortionStrengthX", strengthUv);
 		}
 
-		public float DefaltMaxTintStrength => distortionMaterialTemplate.GetFloat("_TintStrength");
+		public float DefaultMaxTintStrength => distortionMaterialTemplate.GetFloat("_TintStrength");
 		
-		public float DefaltMaxDistortionStrengthX => distortionMaterialTemplate.GetFloat("_DistortionStrengthX");
+		public float DefaultMaxDistortionStrengthX => distortionMaterialTemplate.GetFloat("_DistortionStrengthX");
 
 		#endregion
 

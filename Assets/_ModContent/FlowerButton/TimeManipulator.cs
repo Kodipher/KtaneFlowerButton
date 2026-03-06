@@ -10,17 +10,17 @@ namespace FlowerButtonMod.FlowerButton {
 		private static readonly object gameTimeManipulationLock = new object();
 
 		// A flag to prevent multiple buttons from being held
-		public static bool IsAnyButtonMaupulatingTime { get; private set; } = false;
+		public static bool IsAnyButtonManipulatingTime { get; private set; } = false;
 
 
 		/// <returns>true on success, false if time is manipulated by some other button.</returns>
 		public static bool TrySlowTime() {
 
-			// Check if allowed to maniulate time
+			// Check if allowed to manipulate time
 			lock (gameTimeManipulationLock) {
-				if (IsAnyButtonMaupulatingTime) return false;
+				if (IsAnyButtonManipulatingTime) return false;
 
-				IsAnyButtonMaupulatingTime = true;
+				IsAnyButtonManipulatingTime = true;
 			}
 
 			Time.timeScale = slowedTimeScale;
@@ -30,8 +30,8 @@ namespace FlowerButtonMod.FlowerButton {
 
 		public static void RestoreTime() {
 			lock (gameTimeManipulationLock) {
-				if (!IsAnyButtonMaupulatingTime) return;
-				IsAnyButtonMaupulatingTime = false;
+				if (!IsAnyButtonManipulatingTime) return;
+				IsAnyButtonManipulatingTime = false;
 				Time.timeScale = 1f;
 			}
 		}

@@ -48,7 +48,7 @@ namespace FlowerButtonMod.FlowerButton {
 		/// <summary>
 		/// Overrides the bomb timer for
 		/// - 1 frame if the timer is vanilla
-		/// - until clearned with <see cref="UnsapBombTimer"/> if the timer is modded.
+		/// - until cleared with <see cref="UnsapBombTimer"/> if the timer is modded.
 		/// </summary>
 		/// <param name="displayOverride">The string to override with</param>
 		public void SapBombTimer(string displayOverride) {
@@ -74,8 +74,8 @@ namespace FlowerButtonMod.FlowerButton {
 			};
 
 			// Initialize (and cache) lazy values
-			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb timer refernece.");
-			if (timerDisplayTextMeshPro.Value == null) throw new InvalidOperationException("Could not find the bomb timer text refernece.");
+			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb timer reference.");
+			if (timerDisplayTextMeshPro.Value == null) throw new InvalidOperationException("Could not find the bomb timer text reference.");
 			
 			// Override
 			if (timerHasModdedOverride.Value) {
@@ -124,7 +124,7 @@ namespace FlowerButtonMod.FlowerButton {
 			}
 
 			// Find the bomb timer
-			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb time refernece.");
+			if (bombTimer.Value == null) throw new InvalidOperationException("Could not find the bomb time reference.");
 
 			// Perform additional subtraction
 			float newTime = bombTimer.Value.GetValue<float>("TimeRemaining") - (float)time.TotalSeconds;

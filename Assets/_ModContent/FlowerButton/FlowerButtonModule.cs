@@ -290,11 +290,9 @@ namespace FlowerButtonMod.FlowerButton {
 			if (state == State.Held) UpdateModuleCountdown(Time.unscaledDeltaTime);
 
 			// Deliver penalty
-			if (penaltyTimeLeft > TimeSpan.Zero && !TimeManipulator.IsAnyButtonMaupulatingTime) {
+			if (penaltyTimeLeft > TimeSpan.Zero && !TimeManipulator.IsAnyButtonManipulatingTime) {
 				TimeSpan penaltyDeltaTime = GetPenaltyDeltaTime(Time.deltaTime);
-
-				// Zen mode: add time instead
-				if (ZenModeActive) penaltyDeltaTime = -penaltyDeltaTime;
+				if (ZenModeActive) penaltyDeltaTime = -penaltyDeltaTime; // Zen mode: add time instead
 				timerSapper.SubtractTime(penaltyDeltaTime);
 			}
 
@@ -569,13 +567,13 @@ namespace FlowerButtonMod.FlowerButton {
 			if (!settings.disableVisualDistortion) {
 				distortionManager.AddDistortionToCamera();
 				yield return new Move1D(
-					0, distortionManager.DefaltMaxDistortionStrengthX,
+					0, distortionManager.DefaultMaxDistortionStrengthX,
 					windUpDistortionAppearanceDuration,
 					windUpDistortionAppearanceEasing,
 					distortionManager.SetDistortionStrengthX
 				);
 				yield return new Move1D(
-					0, distortionManager.DefaltMaxTintStrength,
+					0, distortionManager.DefaultMaxTintStrength,
 					windUpDistortionAppearanceDuration,
 					windUpDistortionAppearanceEasing,
 					distortionManager.SetTintStrength
@@ -622,13 +620,13 @@ namespace FlowerButtonMod.FlowerButton {
 
 		IEnumerable<CoroutineYield> EndDistortionRoutine() {
 			yield return new Move1D(
-				distortionManager.DefaltMaxDistortionStrengthX, 0,
+				distortionManager.DefaultMaxDistortionStrengthX, 0,
 				distortionDisappearanceDuration,
 				distortionDisappearanceEasing,
 				distortionManager.SetDistortionStrengthX
 			);
 			yield return new Move1D(
-				distortionManager.DefaltMaxTintStrength, 0,
+				distortionManager.DefaultMaxTintStrength, 0,
 				distortionDisappearanceDuration,
 				distortionDisappearanceEasing,
 				distortionManager.SetTintStrength
