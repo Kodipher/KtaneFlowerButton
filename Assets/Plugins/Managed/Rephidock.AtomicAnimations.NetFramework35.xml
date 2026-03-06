@@ -268,7 +268,7 @@
         </member>
         <member name="M:Rephidock.AtomicAnimations.Base.Ease.EaseUpdateImpl(System.Single)">
             <summary>
-            Implimentation of the ease.
+            Implementation of the ease.
             </summary>
             <param name="valueProgressNew">Next normalized value to ease to in this update</param>
         </member>
@@ -341,7 +341,7 @@
         </member>
         <member name="T:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq">
             <summary>
-            Proives methods to work on coroutines.
+            Provides methods to work on coroutines.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.ToCoroutine(Rephidock.AtomicAnimations.Base.Animation)">
@@ -351,7 +351,7 @@
             Also adds a wait for the animation to be finished.
             </summary>
             <remarks>
-            If waiting is not desired, use a cast coverision instead.
+            If waiting is not desired, use a cast conversion instead.
             </remarks>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineLinq.ToAnimation(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield})">
@@ -377,7 +377,7 @@
             May hold an animation or a wait instruction.
             </para>
             <para>
-            Supposed to be immutable but old langauge features do not enforce this.
+            Supposed to be immutable but old language features do not enforce this.
             Assume all properties are <c>{ get; init; }</c>.
             </para>
             <para>
@@ -513,7 +513,7 @@
         <member name="T:Rephidock.AtomicAnimations.Move1D">
             <summary>
             Moves 1 value over time.
-            An excusilve ease.
+            An exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Move1D.#ctor(System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single})">
@@ -525,7 +525,7 @@
         <member name="T:Rephidock.AtomicAnimations.Move2D">
             <summary>
             Moves 2 values over time.
-            An excusilve ease.
+            An exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Move2D.#ctor(System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single})">
@@ -537,7 +537,7 @@
         <member name="T:Rephidock.AtomicAnimations.Move3D">
             <summary>
             Moves 3 values over time.
-            An excusilve ease.
+            An exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Move3D.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single})">
@@ -549,7 +549,7 @@
         <member name="T:Rephidock.AtomicAnimations.Move4D">
             <summary>
             Moves 4 values over time.
-            An excusilve ease.
+            An exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Move4D.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single,System.Single})">
@@ -561,7 +561,7 @@
         <member name="T:Rephidock.AtomicAnimations.Shift1D">
             <summary>
             Shifts 1 value over time.
-            Is not an excusilve ease.
+            Is not an exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Shift1D.#ctor(System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single})">
@@ -573,7 +573,7 @@
         <member name="T:Rephidock.AtomicAnimations.Shift2D">
             <summary>
             Shifts 2 values over time.
-            Is not an excusilve ease.
+            Is not an exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Shift2D.#ctor(System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single})">
@@ -585,7 +585,7 @@
         <member name="T:Rephidock.AtomicAnimations.Shift3D">
             <summary>
             Shifts 3 values over time.
-            Is not an excusilve ease.
+            Is not an exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Shift3D.#ctor(System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single})">
@@ -597,7 +597,7 @@
         <member name="T:Rephidock.AtomicAnimations.Shift4D">
             <summary>
             Shifts 4 values over time.
-            Is not an excusilve ease.
+            Is not an exclusive ease.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Shift4D.#ctor(System.Single,System.Single,System.Single,System.Single,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{System.Single,System.Single,System.Single,System.Single})">
@@ -618,7 +618,7 @@
         <member name="P:Rephidock.AtomicAnimations.Waves.ShiftedWave.Offset">
             <summary>
             The horizontal offset of the wave.
-            Higher values mean furhter to the right.
+            Higher values mean further to the right.
             </summary>
             <remarks>Init only.</remarks>
         </member>
@@ -676,7 +676,7 @@
             </para>
             <para>
             If two or more ends are equal it is a vertical gap. 
-            The value at the gap is the end value of the last segement contributing to the gap.
+            The value at the gap is the end value of the last segment contributing to the gap.
             </para>
             </summary>
         </member>
@@ -700,7 +700,7 @@
             <para>
             Out of bounds "time" is a valid input and will return
             <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.StartValue"/> or <see cref="P:Rephidock.AtomicAnimations.Waves.Wave.EndValue"/>,
-            depending on the bound breeched.
+            depending on the bound breached.
             </para>
             </summary>
             <remarks>
@@ -787,9 +787,9 @@
         <member name="M:Rephidock.AtomicAnimations.Waves.WaveEase.CreateRunthrough(Rephidock.AtomicAnimations.Waves.Wave,System.Single,System.Boolean,System.TimeSpan,Rephidock.AtomicAnimations.EasingCurve,System.Action{Rephidock.AtomicAnimations.Waves.ShiftedWave})">
             <summary>
             Creates a <see cref="T:Rephidock.AtomicAnimations.Waves.WaveEase"/> that shifts the <paramref name="wave"/>
-            from behind an abitrary span of width <paramref name="spanWidth"/>, starting at
+            from behind an arbitrary span of width <paramref name="spanWidth"/>, starting at
             horizontal position 0, to right beyond it,
-            as if the wave runs through said abitrary span.
+            as if the wave runs through said arbitrary span.
             </summary>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Waves.WaveEase.EaseUpdateImpl(System.Single)">
