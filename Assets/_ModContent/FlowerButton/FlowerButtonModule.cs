@@ -38,8 +38,8 @@ namespace FlowerButtonMod.FlowerButton {
 
 		// Set by Tweaks via reflection
 		const int ZenModeStrikeCount = 3;
-		[NonSerialized] public bool TimeModeActive;
-		[NonSerialized] public bool ZenModeActive;
+		[System.NonSerialized] public bool TimeModeActive;
+		[System.NonSerialized] public bool ZenModeActive;
 
 		// Expose log id for LFA at module instance (required by Tweaks)
 		public int LogFileAnalyzerId => this.logger.tagId.Value;
