@@ -1031,8 +1031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49455dff6788bed4d9f6d5ac9f56d01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeModeActive: 0
-  ZenModeActive: 0
   fakeStausLightOriginal: {fileID: 114000011072955414, guid: 809412060d7d1f44aa2b333aa8f8e0d4,
     type: 2}
   cameraDistortionEffectMaterialOriginal: {fileID: 2100000, guid: 07c928a9c2daeef4da1157b35bdd0243,
