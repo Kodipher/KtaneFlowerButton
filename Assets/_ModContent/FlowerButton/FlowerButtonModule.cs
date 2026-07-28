@@ -21,7 +21,7 @@ namespace FlowerButtonMod.FlowerButton {
 	[RequireComponent(typeof(KMAudio))]
 	public class FlowerButtonModule : MonoBehaviour {
 
-		#region //// State
+		#region /--- State ---/
 
 		private enum State {
 			AwaitingActivation,
@@ -50,7 +50,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region /// Potential Souvenir Data
+		#region /--- Potential Souvenir Data ---/
 
 		/// <summary>
 		/// The time on the module countdown display 
@@ -67,7 +67,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Countdown
+		#region /--- Countdown ---/
 
 		const string CountdownTextAwaitingLights = "  ";
 		const string CountdownTextAwaitingHold = "__";
@@ -127,7 +127,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Penalty
+		#region /--- Penalty ---/
 
 		TimeSpan penaltyTimeLeft = TimeSpan.Zero;
 		const double penaltyTimeScale = 0.75;
@@ -178,7 +178,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Components and parts
+		#region /--- Components and parts ---/
 
 		// Passed in through inspector
 		public FakeStatusLight fakeStausLightOriginal;
@@ -256,7 +256,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Module and Game Events
+		#region /--- Module and Game Events ---/
 
 		void Start() {
 
@@ -366,7 +366,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Button
+		#region /--- Button ---/
 
 		bool isButtonPhysicallyHeldCurrently = false;
 
@@ -486,7 +486,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Routines
+		#region /--- Routines ---/
 
 		readonly static TimeSpan infiniteStrikeDelta = TimeSpan.FromSeconds(0.5);
 		readonly static TimeSpan strikeFlashDurationTime = TimeSpan.FromSeconds(1); // from the game

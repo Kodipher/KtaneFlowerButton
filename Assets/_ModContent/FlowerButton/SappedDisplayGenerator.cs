@@ -10,7 +10,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 	internal class SappedDisplayGenerator {
 
-		#region //// Params + constructor
+		#region /--- Params + constructor ---/
 
 		System.Random Rng { get; /*init;*/ }
 
@@ -37,7 +37,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Digit Picking
+		#region /--- Digit Picking ---/
 
 		/// <summary>
 		/// Queues of non-preferred digits, 
@@ -102,7 +102,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Display
+		#region /--- Display ---/
 
 		/// <summary>Generates a new <see cref="DisplayOverride"/></summary>
 		public void TickDisplay() {

@@ -5,7 +5,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 	internal class CameraDistortionManager {
 
-		#region //// Manager and Effect creation, destruction
+		#region /--- Manager and Effect creation, destruction ---/
 
 		public CameraDistortionManager(Material distortionMaterial) {
 			distortionMaterialTemplate = distortionMaterial;
@@ -30,7 +30,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Distortion params
+		#region /--- Distortion params ---/
 
 		public void AddTime(float time) {
 			if (currentCameraEffect == null) return;

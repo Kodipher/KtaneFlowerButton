@@ -8,7 +8,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 	internal static class ReleaseRuleGenerator {
 
-		#region //// Rule display digits
+		#region /--- Rule display digits ---/
 
 		// Subject, Verb and Object are ordered according to the manual
 
@@ -80,7 +80,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Boolean operators on seqeuence
+		#region /--- Boolean operators on sequence ---/
 
 		delegate bool BoolOperator(IEnumerable<bool> arguments);
 
@@ -92,7 +92,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Tree node definitions
+		#region /--- Tree node definitions ---/
 
 		delegate IEnumerable<int> SubjectValueGenerator(int time);
 
@@ -176,7 +176,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Rule tree common nodes
+		#region /--- Rule tree common nodes ---/
 
 		static class CommonNodes {
 
@@ -353,7 +353,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		#endregion
 
-		#region //// Rule Tree
+		#region /--- Rule Tree ---/
 
 		readonly static SubjectNode[] ruleTree = new SubjectNode[] {
 
@@ -1110,7 +1110,7 @@ namespace FlowerButtonMod.FlowerButton {
 
 		}
 
-		#region //// Testing
+		#region /--- Testing ---/
 
 		/// <summary>
 		/// Editor only.

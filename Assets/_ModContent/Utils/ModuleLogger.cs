@@ -22,7 +22,7 @@ namespace FlowerButtonMod.Utils {
 		// Primarily for log file analyser
 		// and thus must be included in release
 
-		#region //// Constructor, Tag
+		#region /--- Constructor, Tag ---/
 
 		/// <inheritdoc cref="ModuleLogger"/>
 		/// <param name="moduleComponent">The module component to grab display name from.</param>
@@ -82,7 +82,7 @@ namespace FlowerButtonMod.Utils {
 
 		#endregion
 
-		#region //// (static) Instance counting
+		#region /--- (static) Instance counting ---/
 
 		private static readonly object counterLock = new object();
 
@@ -125,7 +125,7 @@ namespace FlowerButtonMod.Utils {
 
 		#endregion
 
-		#region //// Logging
+		#region /--- Logging ---/
 
 		const char lineChar = '═';
 		const int lineLength = 15;
