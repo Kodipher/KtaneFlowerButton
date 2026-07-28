@@ -713,7 +713,7 @@ namespace FlowerButtonMod.FlowerButton {
 						// Change digits
 						timerDisplayGenerator?.TickDisplay();
 						countdownText.text = rng.Next(100).ToString("D2");
-						return new CoroutineYield() { WaitUntil = ts };
+						return CoroutineYield.SleepUntil(ts);
 					}
 				).ToAnimation();
 
@@ -724,7 +724,7 @@ namespace FlowerButtonMod.FlowerButton {
 				solutionCheckDistortionBoostEasings[0],
 				distortionManager.AddDistortionTime
 			);
-			yield return new CoroutineYield() { WaitUntil = solutionCheckSecondDistortionTimestamp };
+			yield return CoroutineYield.SleepUntil(solutionCheckSecondDistortionTimestamp);
 
 			// Second distortion boost
 			yield return new Shift1D(
@@ -733,7 +733,7 @@ namespace FlowerButtonMod.FlowerButton {
 				solutionCheckDistortionBoostEasings[1],
 				distortionManager.AddDistortionTime
 			);
-			yield return new CoroutineYield() { WaitUntil = solutionCheckStatusLightOffTimestamp };
+			yield return CoroutineYield.SleepUntil(solutionCheckStatusLightOffTimestamp);
 
 			// Third distortion + Turn off status light
 			statusLightProxy.SetInActive();
@@ -746,7 +746,7 @@ namespace FlowerButtonMod.FlowerButton {
 			);
 
 			// Wait until the "drop" of the sound
-			yield return new CoroutineYield() { WaitUntil = solutionCheckSuspenseEndTimestamp };
+			yield return CoroutineYield.SleepUntil(solutionCheckSuspenseEndTimestamp);
 
 			// Final distortion
 			yield return new Shift1D(
@@ -778,7 +778,7 @@ namespace FlowerButtonMod.FlowerButton {
 				}
 				timerDisplayGenerator.SetDisplayToPreffered(rng.Next(10));
 
-				yield return new CoroutineYield() { WaitUntil = solutionCheckRestoreTimeTimestamp };
+				yield return CoroutineYield.SleepUntil(solutionCheckRestoreTimeTimestamp);
 
 				// Set penalty
 				// (won't be deducted until time is restored)
