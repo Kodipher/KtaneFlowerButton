@@ -141,6 +141,13 @@
         <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation})">
             <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.GeneralUtilities.Collections.Lazy{Rephidock.AtomicAnimations.Base.Animation},System.TimeSpan)"/>
         </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield},System.TimeSpan)">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(Rephidock.AtomicAnimations.Base.Animation,System.TimeSpan)"/>
+            <remarks>Automatically creates the <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation"/> with the given routine.</remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Run(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield})">
+            <inheritdoc cref="M:Rephidock.AtomicAnimations.AnimationRunner.Run(System.Collections.Generic.IEnumerable{Rephidock.AtomicAnimations.Coroutines.CoroutineYield},System.TimeSpan)"/>
+        </member>
         <member name="M:Rephidock.AtomicAnimations.AnimationRunner.Update(System.TimeSpan)">
             <summary>
             Updates all currently playing animations with time since last update.
@@ -377,8 +384,7 @@
             May hold an animation or a wait instruction.
             </para>
             <para>
-            Supposed to be immutable but old language features do not enforce this.
-            Assume all properties are <c>{ get; init; }</c>.
+            Immutable.
             </para>
             <para>
             See also: <see cref="T:Rephidock.AtomicAnimations.Coroutines.CoroutineAnimation"/>.
@@ -387,8 +393,9 @@
         </member>
         <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Animation">
             <summary>
-            The animation to start. Does not imply any delays.
-            Must be set to <see langword="null"/> for waiting to apply.
+            The animation to start/play.
+            Overrules any delays,
+            must be set to <see langword="null"/> for delays to apply.
             (is a discriminated union with delays)
             </summary>
         </member>
@@ -402,7 +409,7 @@
         <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitLastYieldedAnimation">
             <summary>
             If <see langword="true"/>, causes the routine to wait for the single
-            previously yielded animations to finish.
+            previously yielded animation to finish.
             </summary>
         </member>
         <member name="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitAllYieldedAnimations">
@@ -447,7 +454,8 @@
             <u>without</u> influencing the start times of the following animations.
             </summary>
             <remarks>
-            Is the only waiting option that does not affect start times of animations.
+            Overrules any other delays set to <see langword="true"/>.
+            (Must be set to <see langword="false"/> for other delays on this instance to apply).
             </remarks>
         </member>
         <member name="F:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Join">
@@ -476,21 +484,23 @@
             <u>without</u> influencing the start times of the following animations.
             </summary>
             <remarks>
-            Is a static instance with just
-            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SuspendForAnUpdate"/> being enabled.
+            Is a static instance with just <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SuspendForAnUpdate"/> being set.
             </remarks>
         </member>
         <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Sleep(System.TimeSpan)">
-            <summary>
-            A yield that suspends execution for given amount of time.
-            </summary>
-            <remarks>
-            Creates an instance with just 
-            <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitFor"/> being set.
-            </remarks>
+            <summary>A yield that suspends execution for given amount of time.</summary>
+            <remarks>Creates an instance with just <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitFor"/> being set.</remarks>
         </member>
-        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.Clone">
-            <inheritdoc/>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SleepUntil(System.TimeSpan)">
+            <summary>A yield that suspends execution until the given timestamp.</summary>
+            <remarks>Creates an instance with just <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitUntil"/> set.</remarks>
+        </member>
+        <member name="M:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.SleepUntilTrue(System.Func{System.Boolean})">
+            <summary>
+            A yield that suspends execution until the given <paramref name="predicate"/> returns <see langword="true"/>.
+            The given <paramref name="predicate"/> is called every update.
+            </summary>
+            <remarks>Creates an instance with just <see cref="P:Rephidock.AtomicAnimations.Coroutines.CoroutineYield.WaitUntilPredicate"/> set.</remarks>
         </member>
         <member name="T:Rephidock.AtomicAnimations.EasingCurve">
             <summary>
@@ -622,6 +632,9 @@
             </summary>
             <remarks>Init only.</remarks>
         </member>
+        <member name="M:Rephidock.AtomicAnimations.Waves.ShiftedWave.#ctor(Rephidock.AtomicAnimations.Waves.Wave,System.Single)">
+            <summary>Creates a new <see cref="T:Rephidock.AtomicAnimations.Waves.ShiftedWave"/>.</summary>
+        </member>
         <member name="M:Rephidock.AtomicAnimations.Waves.ShiftedWave.GetValueAt(System.Single)">
             <inheritdoc cref="M:Rephidock.AtomicAnimations.Waves.Wave.GetValueAt(System.Single)"/>
         </member>
@@ -695,7 +708,7 @@
         <member name="M:Rephidock.AtomicAnimations.Waves.Wave.GetValueAt(System.Single)">
             <summary>
             <para>
-            Returns the wave's value at a give "time" (<paramref name="horizontalPosition"/>).
+            Returns the wave's value at a given "time" (<paramref name="horizontalPosition"/>).
             </para>
             <para>
             Out of bounds "time" is a valid input and will return

@@ -4,6 +4,25 @@
         <name>Rephidock.GeneralUtilities.NetFramework35</name>
     </assembly>
     <members>
+        <member name="T:Rephidock.GeneralUtilities.Collections.FutureCollectionExtensions">
+            <summary>
+            Provides some extensions for collections
+            which were added in future versions of .NET
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureCollectionExtensions.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Returns a value from the dictionaries if it exists,
+            otherwise returns the default value.
+            </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.FutureCollectionExtensions.TryAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Adds a value to the dictionary only if the dictionary
+            does not already have a value under that key.
+            Returns <see langword="true"/> if the value was added. 
+            </summary>
+        </member>
         <member name="T:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions">
             <summary>
             Provides extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>
@@ -21,7 +40,7 @@
             <summary>Prepends a value to the start of the sequence.</summary>
             <typeparam name="T"></typeparam>
             <param name="source">Sequence of values to prepend to</param>
-            <param name="item">The value to prened</param>
+            <param name="item">The value to prepend</param>
             <returns>A new sequence that starts with the prepended element</returns>
         </member>
         <member name="M:Rephidock.GeneralUtilities.Collections.FutureEnumerableExtensions.Zip``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1})">
@@ -168,6 +187,12 @@
         <member name="M:Rephidock.GeneralUtilities.Collections.Pair`2.ToString">
             <inheritdoc/>
         </member>
+        <member name="T:Rephidock.GeneralUtilities.Collections.Pair">
+            <inheritdoc cref="T:Rephidock.GeneralUtilities.Collections.Pair`2"/>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Collections.Pair.New``2(``0,``1)">
+            <summary>Creates a new <see cref="T:Rephidock.GeneralUtilities.Collections.Pair`2"/> from the given values.</summary>
+        </member>
         <member name="T:Rephidock.GeneralUtilities.Collections.ReadOnlyExtensions">
             <summary>
             Provides extensions added in .net7 to fluently
@@ -274,7 +299,7 @@
             values above are wrapped into it from the start
             </para>
             <para>
-            Can be thought of as a generilized version of <c>PosMod</c>, as
+            Can be thought of as a generalized version of <c>PosMod</c>, as
             <c>x.Wrap(0, y)</c> returns the same result as <c>x.PosMod(y)</c>
             </para>
             </summary>
@@ -351,7 +376,7 @@
         </member>
         <member name="T:Rephidock.GeneralUtilities.Maths.RadixMath">
             <summary>
-            Provides methods for convertsion of numbers to/from digit arrays in arbitrary bases
+            Provides methods for conversion of numbers to/from digit arrays in arbitrary bases
             and radix-related maths.
             </summary>
         </member>
@@ -423,10 +448,13 @@
         </member>
         <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.NextUInt31(System.Random)">
             <summary>
-            Returns a non-negative random <see cref="T:System.Int32"/>.
+            Returns a random non-negative <see cref="T:System.Int32"/>.
             Unlike <see cref="M:System.Random.Next"/>, includes
             <see cref="F:System.Int32.MaxValue"/> as a possible value.
             </summary>
+        </member>
+        <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.NextByte(System.Random)">
+            <summary>Returns a random <see cref="T:System.Byte"/>.</summary>
         </member>
         <member name="M:Rephidock.GeneralUtilities.Randomness.RandomnessExtensions.Chance(System.Random,System.Double)">
             <summary>
@@ -498,10 +526,10 @@
             </remarks>
         </member>
         <member name="F:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.oldToNew">
-            <summary>An array which translates old indexes to new indexes</summary>
+            <summary>An array which translates old indexes to new indexes.</summary>
         </member>
         <member name="P:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.Count">
-            <inheritdoc/>
+            <inheritdoc cref="P:System.Collections.Generic.ICollection`1.Count"/>
         </member>
         <member name="M:Rephidock.GeneralUtilities.Randomness.ShuffleIndexMap.#ctor(System.Int32)">
             <summary>
